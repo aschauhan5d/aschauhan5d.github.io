@@ -1,823 +1,409 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Abhishek Singh Chauhan</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500&family=IBM+Plex+Mono:wght@400&display=swap"
-    rel="stylesheet" />
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0
-    }
-
-    body {
-      font-family: 'IBM Plex Sans', system-ui, sans-serif;
-      font-weight: 300;
-      font-size: 18px;
-      line-height: 1.75;
-      color: #2c2c2c;
-      background: #fafaf7;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    /* NAV */
-    .nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: #fafaf7;
-      border-bottom: 1px solid #e4e4e0;
-      display: flex;
-      align-items: center;
-      padding: 0 1.75rem;
-      height: 50px;
-    }
-
-    .nav-name {
-      font-size: 15px;
-      font-weight: 500;
-      color: #1f1f1f;
-      margin-right: 2rem;
-      white-space: nowrap;
-      flex-shrink: 0;
-      letter-spacing: -.01em;
-    }
-
-    .nav-links {
-      display: flex;
-      overflow-x: auto;
-      scrollbar-width: none;
-      flex: 1;
-    }
-
-    .nav-links::-webkit-scrollbar {
-      display: none
-    }
-
-    .nav-links a {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 11px;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      color: #aab8a8;
-      padding: 0 .9rem;
-      height: 50px;
-      display: flex;
-      align-items: center;
-      white-space: nowrap;
-      border-bottom: 2px solid transparent;
-      margin-bottom: -1px;
-      transition: color .15s, border-color .15s;
-    }
-
-    .nav-links a:hover {
-      color: #5b8a6e;
-    }
-
-    .nav-links a.on {
-      color: #5b8a6e;
-      border-color: #5b8a6e;
-    }
-
-    /* CONTENT */
-    .wrap {
-      max-width: 720px;
-      margin: 0 auto;
-      padding: 3.5rem 1.75rem 6rem;
-    }
-
-    /* HERO */
-    .hero-name {
-      font-size: 34px;
-      font-weight: 500;
-      letter-spacing: -.025em;
-      line-height: 1.1;
-      color: #1f1f1f;
-      margin-bottom: .35rem;
-    }
-
-    .hero-sub {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 13px;
-      letter-spacing: .07em;
-      text-transform: uppercase;
-      color: #5b8a6e;
-      margin-bottom: 1.4rem;
-    }
-
-    .hero-bio {
-      font-size: 16px;
-      color: #555;
-      line-height: 1.9;
-      margin-bottom: 1.25rem;
-    }
-
-    .links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: .15rem 1.5rem;
-    }
-
-    .links a {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 13px;
-      letter-spacing: .06em;
-      text-transform: uppercase;
-      color: #7a9e8c;
-    }
-
-    .links a:hover {
-      color: #3a6e58;
-    }
-
-    hr {
-      border: none;
-      border-top: 1px solid #e4e4e0;
-      margin: 2.5rem 0;
-    }
-
-    /* SECTION TITLE */
-    .sec-title {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 11px;
-      letter-spacing: .22em;
-      text-transform: uppercase;
-      color: #7a9e8c;
-      margin-bottom: 1.25rem;
-    }
-
-    /* INFO ROWS */
-    .info-row {
-      display: flex;
-      gap: 1rem;
-      padding: .5rem 0;
-      border-bottom: 1px solid #eceee8;
-    }
-
-    .info-row:first-of-type {
-      border-top: 1px solid #eceee8;
-    }
-
-    .info-key {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 12px;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      color: #aab8a8;
-      width: 105px;
-      flex-shrink: 0;
-      padding-top: .12rem;
-    }
-
-    .info-val {
-      font-size: 15px;
-      color: #4a4a4a;
-    }
-
-    .tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: .25rem;
-      margin-top: 1.25rem;
-    }
-
-    .tag {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 11px;
-      letter-spacing: .04em;
-      text-transform: uppercase;
-      padding: .22rem .58rem;
-      border: 1px solid #d4e0d0;
-      color: #7a9e8c;
-      background: #f4f9f5;
-    }
-
-    /* PUBLICATIONS */
-    .pub {
-      padding: 1.1rem 0;
-      border-bottom: 1px solid #eceee8;
-    }
-
-    .pub:first-child {
-      border-top: 1px solid #eceee8;
-    }
-
-    .pub-year {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 12px;
-      color: #aab8a8;
-      margin-bottom: .2rem;
-    }
-
-    .pub-title {
-      font-size: 17px;
-      color: #1f1f1f;
-      margin-bottom: .2rem;
-      font-weight: 400;
-      line-height: 1.4;
-    }
-
-    .pub-authors {
-      font-size: 14px;
-      color: #7a8a78;
-      margin-bottom: .2rem;
-    }
-
-    .pub-venue {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 12px;
-      color: #aab8a8;
-      margin-bottom: .5rem;
-    }
-
-    .pub-actions {
-      display: flex;
-      gap: 1rem;
-    }
-
-    .pub-actions a {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 11px;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      color: #7a9e8c;
-      border-bottom: 1px solid #d4e0d0;
-      padding-bottom: 1px;
-    }
-
-    .pub-actions a:hover {
-      color: #3a6e58;
-      border-color: #3a6e58;
-    }
-
-    /* CV */
-    .cv-group {
-      margin-bottom: 2rem;
-    }
-
-    .cv-group-label {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 11px;
-      letter-spacing: .16em;
-      text-transform: uppercase;
-      color: #b8c4b6;
-      margin-bottom: .5rem;
-    }
-
-    .cv-entry {
-      padding: .8rem 0;
-      border-bottom: 1px solid #eceee8;
-      display: flex;
-      gap: 1.25rem;
-    }
-
-    .cv-entry:last-child {
-      border-bottom: none;
-    }
-
-    .cv-year {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 12px;
-      color: #aab8a8;
-      width: 80px;
-      flex-shrink: 0;
-      line-height: 1.6;
-      padding-top: .05rem;
-    }
-
-    .cv-title {
-      font-size: 16px;
-      color: #1f1f1f;
-      margin-bottom: .12rem;
-    }
-
-    .cv-sub {
-      font-size: 14px;
-      color: #7a8a78;
-    }
-
-    /* BLOG LIST */
-    .post {
-      padding: 1.1rem 0;
-      border-bottom: 1px solid #eceee8;
-    }
-
-    .post:first-child {
-      border-top: 1px solid #eceee8;
-    }
-
-    .post-date {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 12px;
-      color: #aab8a8;
-      margin-bottom: .2rem;
-    }
-
-    .post-title {
-      font-size: 17px;
-      color: #1f1f1f;
-      margin-bottom: .2rem;
-      font-weight: 400;
-      display: block;
-      transition: color .15s;
-    }
-
-    .post-title:hover {
-      color: #5b8a6e;
-    }
-
-    .post-excerpt {
-      font-size: 14px;
-      color: #7a8a78;
-      line-height: 1.7;
-    }
-
-    /* BLOG POST PAGE */
-    .post-page {
-      display: none;
-    }
-
-    .post-page.active {
-      display: block;
-    }
-
-    .post-back {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 12px;
-      letter-spacing: .07em;
-      text-transform: uppercase;
-      color: #7a9e8c;
-      margin-bottom: 2rem;
-      display: inline-block;
-      cursor: pointer;
-    }
-
-    .post-back:hover {
-      color: #3a6e58;
-    }
-
-    .post-page-title {
-      font-size: 28px;
-      font-weight: 500;
-      letter-spacing: -.02em;
-      color: #1f1f1f;
-      margin-bottom: .4rem;
-      line-height: 1.2;
-    }
-
-    .post-page-date {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 12px;
-      color: #aab8a8;
-      margin-bottom: 2rem;
-    }
-
-    .post-body {
-      font-size: 16px;
-      color: #444;
-      line-height: 1.9;
-    }
-
-    .post-body h2 {
-      font-size: 20px;
-      font-weight: 500;
-      color: #1f1f1f;
-      margin: 2rem 0 .75rem;
-    }
-
-    .post-body p {
-      margin-bottom: 1rem;
-    }
-
-    .post-body pre {
-      background: #f4f4f0;
-      border: 1px solid #e4e4e0;
-      padding: 1rem 1.25rem;
-      overflow-x: auto;
-      margin: 1rem 0;
-      border-radius: 2px;
-    }
-
-    .post-body code {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 13px;
-      color: #3a6e58;
-    }
-
-    .post-body pre code {
-      color: #2c2c2c;
-    }
-
-    .post-body ul,
-    .post-body ol {
-      padding-left: 1.5rem;
-      margin-bottom: 1rem;
-    }
-
-    .post-body li {
-      margin-bottom: .3rem;
-    }
-
-    .post-body strong {
-      font-weight: 500;
-      color: #1f1f1f;
-    }
-
-    /* EMPTY / LOADING */
-    .empty {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 13px;
-      color: #b8c4b6;
-      padding: .5rem 0;
-    }
-
-    .loading {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 12px;
-      color: #b8c4b6;
-      padding: .5rem 0;
-      font-style: italic;
-    }
-
-    /* FOOTER */
-    .footer {
-      border-top: 1px solid #e4e4e0;
-      padding-top: 1.25rem;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 12px;
-      letter-spacing: .05em;
-      color: #b8c4b6;
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: .3rem;
-    }
-
-    /* RESPONSIVE */
-    @media(max-width:560px) {
-      .wrap {
-        padding: 2.25rem 1.1rem 5rem;
-      }
-
-      .hero-name {
-        font-size: 26px;
-      }
-
-      .nav {
-        padding: 0 1.1rem;
-      }
-
-      .nav-name {
-        font-size: 13px;
-        margin-right: 1rem;
-      }
-
-      .nav-links a {
-        padding: 0 .65rem;
-      }
-
-      .info-row {
-        flex-direction: column;
-        gap: .1rem;
-      }
-
-      .info-key {
-        width: auto;
-      }
-
-      .cv-entry {
-        flex-direction: column;
-        gap: .2rem;
-      }
-
-      .cv-year {
-        width: auto;
-      }
-
-      .footer {
-        flex-direction: column;
-      }
-    }
-  </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Abhishek Singh Chauhan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'IBM Plex Sans',system-ui,sans-serif;font-weight:300;font-size:18px;line-height:1.75;color:#2c2c2c;background:#fafaf7;}
+a{color:inherit;text-decoration:none}
+html{scroll-behavior:smooth;}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:100;background:#fafaf7;border-bottom:1px solid #e4e4e0;display:flex;align-items:center;padding:0 1.75rem;height:50px;}
+.nav-name{font-size:15px;font-weight:500;color:#1f1f1f;margin-right:2rem;white-space:nowrap;flex-shrink:0;letter-spacing:-.01em;}
+.nav-links{display:flex;overflow-x:auto;scrollbar-width:none;flex:1;}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-links a{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#aab8a8;padding:0 .9rem;height:50px;display:flex;align-items:center;white-space:nowrap;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .15s,border-color .15s;}
+.nav-links a:hover{color:#5b8a6e;}
+.nav-links a.on{color:#5b8a6e;border-color:#5b8a6e;}
+
+/* CONTENT */
+.wrap{max-width:720px;margin:0 auto;padding:3.5rem 1.75rem 6rem;}
+
+/* HERO */
+.hero-name{font-size:34px;font-weight:500;letter-spacing:-.025em;line-height:1.1;color:#1f1f1f;margin-bottom:.35rem;}
+.hero-sub{font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.07em;text-transform:uppercase;color:#5b8a6e;margin-bottom:1.4rem;}
+.hero-bio{font-size:16px;color:#555;line-height:1.9;margin-bottom:1.25rem;}
+.links{display:flex;flex-wrap:wrap;gap:.15rem 1.5rem;}
+.links a{font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:#7a9e8c;}
+.links a:hover{color:#3a6e58;}
+
+hr{border:none;border-top:1px solid #e4e4e0;margin:2.5rem 0;}
+
+/* SECTION TITLE */
+.sec-title{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#7a9e8c;margin-bottom:1.25rem;}
+
+/* INFO ROWS */
+.info-row{display:flex;gap:1rem;padding:.5rem 0;border-bottom:1px solid #eceee8;}
+.info-row:first-of-type{border-top:1px solid #eceee8;}
+.info-key{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#aab8a8;width:105px;flex-shrink:0;padding-top:.12rem;}
+.info-val{font-size:15px;color:#4a4a4a;}
+.tags{display:flex;flex-wrap:wrap;gap:.25rem;margin-top:1.25rem;}
+.tag{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:.22rem .58rem;border:1px solid #d4e0d0;color:#7a9e8c;background:#f4f9f5;}
+
+/* PUBLICATIONS */
+.pub{padding:1.1rem 0;border-bottom:1px solid #eceee8;}
+.pub:first-child{border-top:1px solid #eceee8;}
+.pub-year{font-family:'IBM Plex Mono',monospace;font-size:12px;color:#aab8a8;margin-bottom:.2rem;}
+.pub-title{font-size:17px;color:#1f1f1f;margin-bottom:.2rem;font-weight:400;line-height:1.4;}
+.pub-authors{font-size:14px;color:#7a8a78;margin-bottom:.2rem;}
+.pub-venue{font-family:'IBM Plex Mono',monospace;font-size:12px;color:#aab8a8;margin-bottom:.5rem;}
+.pub-actions{display:flex;gap:1rem;}
+.pub-actions a{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#7a9e8c;border-bottom:1px solid #d4e0d0;padding-bottom:1px;}
+.pub-actions a:hover{color:#3a6e58;border-color:#3a6e58;}
+
+/* CV */
+.cv-group{margin-bottom:2rem;}
+.cv-group-label{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#b8c4b6;margin-bottom:.5rem;}
+.cv-entry{padding:.8rem 0;border-bottom:1px solid #eceee8;display:flex;gap:1.25rem;}
+.cv-entry:last-child{border-bottom:none;}
+.cv-year{font-family:'IBM Plex Mono',monospace;font-size:12px;color:#aab8a8;width:80px;flex-shrink:0;line-height:1.6;padding-top:.05rem;}
+.cv-title{font-size:16px;color:#1f1f1f;margin-bottom:.12rem;}
+.cv-sub{font-size:14px;color:#7a8a78;}
+
+/* BLOG LIST */
+.post{padding:1.1rem 0;border-bottom:1px solid #eceee8;}
+.post:first-child{border-top:1px solid #eceee8;}
+.post-date{font-family:'IBM Plex Mono',monospace;font-size:12px;color:#aab8a8;margin-bottom:.2rem;}
+.post-title{font-size:17px;color:#1f1f1f;margin-bottom:.2rem;font-weight:400;display:block;transition:color .15s;}
+.post-title:hover{color:#5b8a6e;}
+.post-excerpt{font-size:14px;color:#7a8a78;line-height:1.7;}
+
+/* BLOG POST PAGE */
+.post-page{display:none;}
+.post-page.active{display:block;}
+.post-back{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:#7a9e8c;margin-bottom:2rem;display:inline-block;cursor:pointer;}
+.post-back:hover{color:#3a6e58;}
+.post-page-title{font-size:28px;font-weight:500;letter-spacing:-.02em;color:#1f1f1f;margin-bottom:.4rem;line-height:1.2;}
+.post-page-date{font-family:'IBM Plex Mono',monospace;font-size:12px;color:#aab8a8;margin-bottom:2rem;}
+.post-body{font-size:16px;color:#444;line-height:1.9;}
+.post-body h2{font-size:20px;font-weight:500;color:#1f1f1f;margin:2rem 0 .75rem;}
+.post-body p{margin-bottom:1rem;}
+.post-body pre{background:#f4f4f0;border:1px solid #e4e4e0;padding:1rem 1.25rem;overflow-x:auto;margin:1rem 0;border-radius:2px;}
+.post-body code{font-family:'IBM Plex Mono',monospace;font-size:13px;color:#3a6e58;}
+.post-body pre code{color:#2c2c2c;}
+.post-body ul,.post-body ol{padding-left:1.5rem;margin-bottom:1rem;}
+.post-body li{margin-bottom:.3rem;}
+.post-body strong{font-weight:500;color:#1f1f1f;}
+
+/* EMPTY / LOADING */
+.empty{font-family:'IBM Plex Mono',monospace;font-size:13px;color:#b8c4b6;padding:.5rem 0;}
+.loading{font-family:'IBM Plex Mono',monospace;font-size:12px;color:#b8c4b6;padding:.5rem 0;font-style:italic;}
+
+/* FOOTER */
+.footer{border-top:1px solid #e4e4e0;padding-top:1.25rem;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.05em;color:#b8c4b6;display:flex;justify-content:space-between;flex-wrap:wrap;gap:.3rem;}
+
+/* RESPONSIVE */
+@media(max-width:560px){
+  .wrap{padding:2.25rem 1.1rem 5rem;}
+  .hero-name{font-size:26px;}
+  .nav{padding:0 1.1rem;}
+  .nav-name{font-size:13px;margin-right:1rem;}
+  .nav-links a{padding:0 .65rem;}
+  .info-row{flex-direction:column;gap:.1rem;}
+  .info-key{width:auto;}
+  .cv-entry{flex-direction:column;gap:.2rem;}
+  .cv-year{width:auto;}
+  .footer{flex-direction:column;}
+}
+</style>
 </head>
-
 <body>
 
-  <nav class="nav">
-    <span class="nav-name">Abhishek Singh Chauhan</span>
-    <div class="nav-links">
-      <a href="#about" id="n-about" class="nav-link on">About</a>
-      <a href="#publications" id="n-pub" class="nav-link">Publications</a>
-      <a href="#cv" id="n-cv" class="nav-link">CV</a>
-      <a href="#blog" id="n-blog" class="nav-link">Blog</a>
-    </div>
-  </nav>
+<nav class="nav">
+  <span class="nav-name">Abhishek Singh Chauhan</span>
+  <div class="nav-links">
+    <a href="#about"        id="n-about" class="nav-link on">About</a>
+    <a href="#publications" id="n-pub"   class="nav-link">Publications</a>
+    <a href="#cv"           id="n-cv"    class="nav-link">CV</a>
+    <a href="#blog"         id="n-blog"  class="nav-link">Blog</a>
+  </div>
+</nav>
 
-  <div class="wrap">
+<div class="wrap">
 
-    <!-- HOME PAGE -->
-    <div id="home-page">
+  <!-- HOME PAGE -->
+  <div id="home-page">
 
-      <div id="about" style="margin-bottom:2.75rem;">
-        <div class="hero-name">Abhishek Singh Chauhan</div>
-        <div class="hero-sub">Research Scholar (PhD) &nbsp;·&nbsp; Computer Vision &amp; Deep Learning</div>
-        <p class="hero-bio">AI and deep learning researcher with interests in computer vision and multimodal learning.
-          Research Scholar (PhD) in the Department of Computer Application at Graphic Era Deemed to be University,
-          Dehradun.</p>
-        <div class="links">
-          <a href="mailto:aschauhan5d@gmail.com">Email</a>
-          <a href="https://github.com/aschauhan5d" target="_blank" rel="noopener">GitHub</a>
-          <a href="https://linkedin.com/in/aschauhan5d" target="_blank" rel="noopener">LinkedIn</a>
-          <a href="https://orcid.org/0009-0005-3507-6499" target="_blank" rel="noopener">ORCID</a>
-          <a href="cv.pdf">CV ↓</a>
-        </div>
-
-        <hr style="margin:1.75rem 0;" />
-        <div class="sec-title">About</div>
-        <div class="info-row"><span class="info-key">Position</span><span class="info-val">Research Scholar (PhD)</span>
-        </div>
-        <div class="info-row"><span class="info-key">Department</span><span class="info-val">Computer Application</span>
-        </div>
-        <div class="info-row"><span class="info-key">University</span><span class="info-val">Graphic Era Deemed to be
-            University, Dehradun</span></div>
-        <div class="info-row"><span class="info-key">Location</span><span class="info-val">Dehradun, Uttarakhand</span>
-        </div>
-        <div class="info-row"><span class="info-key">Email</span><span class="info-val">aschauhan5d@gmail.com</span>
-        </div>
-        <div class="tags">
-          <span class="tag">Deep Learning</span>
-          <span class="tag">Computer Vision</span>
-          <span class="tag">Vision Transformers</span>
-          <span class="tag">Medical Imaging</span>
-          <span class="tag">Multimodal Learning</span>
-          <span class="tag">PyTorch</span>
-          <span class="tag">Machine Learning</span>
-        </div>
+    <div id="about" style="margin-bottom:2.75rem;">
+      <div class="hero-name">Abhishek Singh Chauhan</div>
+      <div class="hero-sub">Research Scholar (PhD) &nbsp;·&nbsp; Computer Vision &amp; Deep Learning</div>
+      <p class="hero-bio">AI and deep learning researcher with interests in computer vision and multimodal learning. Research Scholar (PhD) in the Department of Computer Application at Graphic Era Deemed to be University, Dehradun.</p>
+      <div class="links">
+        <a href="mailto:aschauhan5d@gmail.com">Email</a>
+        <a href="https://github.com/aschauhan5d" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://linkedin.com/in/aschauhan5d" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://orcid.org/0009-0005-3507-6499" target="_blank" rel="noopener">ORCID</a>
+        <a href="cv.pdf">CV ↓</a>
       </div>
 
-      <hr />
-
-      <div id="publications" style="margin-bottom:2.75rem;">
-        <div class="sec-title">Publications</div>
-        <div id="pub-list">
-          <div class="loading">Loading…</div>
-        </div>
-      </div>
-
-      <hr />
-
-      <div id="cv" style="margin-bottom:2.75rem;">
-        <div class="sec-title">Curriculum Vitae</div>
-        <div class="cv-group">
-          <div class="cv-group-label">Education</div>
-          <div class="cv-entry">
-            <div class="cv-year">2026 –<br>Present</div>
-            <div>
-              <div class="cv-title">PhD, Computer Application</div>
-              <div class="cv-sub">Graphic Era Deemed to be University, Dehradun, Uttarakhand</div>
-            </div>
-          </div>
-        </div>
-        <div class="cv-group">
-          <div class="cv-group-label">Research</div>
-          <div class="cv-entry">
-            <!-- <div class="cv-year">Active</div> -->
-            <!-- <div>
-              <div class="cv-title">3D Volumetric Segmentation with Vision Transformers</div>
-              <div class="cv-sub">Adapter fine-tuning for medical imaging — LoRA, VPT, AdaptFormer</div>
-            </div> -->
-          </div>
-          <div class="cv-entry">
-            <div class="cv-year">Active</div>
-            <div>
-              <div class="cv-title">Multimodal Learning</div>
-              <div class="cv-sub">Vision-language models and cross-modal representation learning</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <hr />
-
-      <div id="blog" style="margin-bottom:2.75rem;">
-        <div class="sec-title">Blog</div>
-        <div id="blog-list">
-          <div class="loading">Loading…</div>
-        </div>
-      </div>
-
-      <div class="footer">
-        <span>© 2026 Abhishek Singh Chauhan</span>
-        <span>Graphic Era Deemed to be University · Dehradun</span>
+      <hr style="margin:1.75rem 0;"/>
+      <div class="sec-title">About</div>
+      <div class="info-row"><span class="info-key">Position</span><span class="info-val">Research Scholar (PhD)</span></div>
+      <div class="info-row"><span class="info-key">Department</span><span class="info-val">Computer Application</span></div>
+      <div class="info-row"><span class="info-key">University</span><span class="info-val">Graphic Era Deemed to be University, Dehradun</span></div>
+      <div class="info-row"><span class="info-key">Location</span><span class="info-val">Dehradun, Uttarakhand</span></div>
+      <div class="info-row"><span class="info-key">Email</span><span class="info-val">aschauhan5d@gmail.com</span></div>
+      <div class="tags">
+        <span class="tag">Deep Learning</span>
+        <span class="tag">Computer Vision</span>
+        <span class="tag">Vision Transformers</span>
+        <span class="tag">Medical Imaging</span>
+        <span class="tag">Multimodal Learning</span>
+        <span class="tag">PyTorch</span>
+        <span class="tag">Machine Learning</span>
       </div>
     </div>
 
-    <!-- BLOG POST PAGE -->
-    <div id="post-page" class="post-page">
-      <div class="post-back" onclick="showHome()">← Back</div>
-      <div class="post-page-title" id="post-title"></div>
-      <div class="post-page-date" id="post-date"></div>
-      <div class="post-body" id="post-body"></div>
-      <hr style="margin:2.5rem 0;" />
-      <div class="footer">
-        <span>© 2026 Abhishek Singh Chauhan</span>
-        <span>Graphic Era Deemed to be University · Dehradun</span>
+    <hr/>
+
+    <div id="publications" style="margin-bottom:2.75rem;">
+      <div class="sec-title">Publications</div>
+      <div id="pub-list"><div class="loading">Loading…</div></div>
+    </div>
+
+    <hr/>
+
+    <div id="cv" style="margin-bottom:2.75rem;">
+      <div class="sec-title">Curriculum Vitae</div>
+      <div class="cv-group">
+        <div class="cv-group-label">Education</div>
+        <div class="cv-entry">
+          <div class="cv-year">2026 –<br>Present</div>
+          <div><div class="cv-title">PhD, Computer Application</div><div class="cv-sub">Graphic Era Deemed to be University, Dehradun, Uttarakhand</div></div>
+        </div>
+      </div>
+      <div class="cv-group">
+        <div class="cv-group-label">Research</div>
+        <div class="cv-entry">
+          <div class="cv-year">Active</div>
+          <div><div class="cv-title">3D Volumetric Segmentation with Vision Transformers</div><div class="cv-sub">Adapter fine-tuning for medical imaging — LoRA, VPT, AdaptFormer</div></div>
+        </div>
+        <div class="cv-entry">
+          <div class="cv-year">Active</div>
+          <div><div class="cv-title">Multimodal Learning</div><div class="cv-sub">Vision-language models and cross-modal representation learning</div></div>
+        </div>
       </div>
     </div>
 
+    <hr/>
+
+    <div id="blog" style="margin-bottom:2.75rem;">
+      <div class="sec-title">Blog</div>
+      <div id="blog-list"><div class="loading">Loading…</div></div>
+    </div>
+
+    <div class="footer">
+      <span>© 2026 Abhishek Singh Chauhan</span>
+      <span>Graphic Era Deemed to be University · Dehradun</span>
+    </div>
   </div>
 
-  <script>
-    const NAV_H = 52;
-    let onPostPage = false;
+  <!-- BLOG POST PAGE -->
+  <div id="post-page" class="post-page">
+    <div class="post-back" onclick="showHome()">← Back</div>
+    <div class="post-page-title" id="post-title"></div>
+    <div class="post-page-date" id="post-date"></div>
+    <div class="post-body" id="post-body"></div>
+    <hr style="margin:2.5rem 0;"/>
+    <div class="footer">
+      <span>© 2026 Abhishek Singh Chauhan</span>
+      <span>Graphic Era Deemed to be University · Dehradun</span>
+    </div>
+  </div>
 
-    // ── PAGE SWITCHER ──
-    function showHome(targetId) {
-      onPostPage = false;
-      document.getElementById('home-page').style.display = '';
-      document.getElementById('post-page').classList.remove('active');
-      if (targetId) {
-        requestAnimationFrame(() => {
-          const el = document.getElementById(targetId);
-          if (el) window.scrollTo({ top: el.offsetTop - NAV_H, behavior: 'smooth' });
-        });
-      } else {
-        window.scrollTo({ top: 0, behavior: 'instant' });
-      }
-      updateNav();
-    }
+</div>
 
-    function showPost(file, title, date) {
-      fetch('blogs/' + file)
-        .then(r => { if (!r.ok) throw 0; return r.text(); })
-        .then(text => {
-          const fm = parseFrontmatter(text);
-          document.getElementById('post-title').textContent = fm.title || title;
-          document.getElementById('post-date').textContent = fm.date || date;
-          document.getElementById('post-body').innerHTML = renderMD((fm.body || '').trim());
-          document.getElementById('home-page').style.display = 'none';
-          document.getElementById('post-page').classList.add('active');
-          window.scrollTo({ top: 0, behavior: 'instant' });
-          onPostPage = true;
-          document.querySelectorAll('.nav-link').forEach(a => a.classList.remove('on'));
-        })
-        .catch(() => alert('Could not load: ' + file));
-    }
+<script>
+const NAV_H = 52;
+let onPostPage = false;
 
-    // ── NAV CLICK ──
-    document.querySelectorAll('.nav-link').forEach(link => {
-      link.addEventListener('click', function (e) {
-        e.preventDefault();
-        const id = this.getAttribute('href').replace('#', '');
-        if (onPostPage) {
-          showHome(id);
-        } else {
-          const el = document.getElementById(id);
-          if (el) window.scrollTo({ top: el.offsetTop - NAV_H, behavior: 'smooth' });
-        }
-      });
+// ── PAGE SWITCHER ──
+function showHome(targetId) {
+  onPostPage = false;
+  document.getElementById('home-page').style.display = '';
+  document.getElementById('post-page').classList.remove('active');
+  if (targetId) {
+    requestAnimationFrame(() => {
+      const el = document.getElementById(targetId);
+      if (el) window.scrollTo({ top: el.offsetTop - NAV_H, behavior: 'smooth' });
     });
+  } else {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }
+  updateNav();
+}
 
-    // ── SCROLL SPY ──
-    const SECS = ['about', 'publications', 'cv', 'blog'];
-    const NIDS = ['n-about', 'n-pub', 'n-cv', 'n-blog'];
+function showPost(file, title, date) {
+  fetch('blogs/' + file)
+    .then(r => { if (!r.ok) throw 0; return r.text(); })
+    .then(text => {
+      const fm = parseFrontmatter(text);
+      document.getElementById('post-title').textContent = fm.title || title;
+      document.getElementById('post-date').textContent  = fm.date  || date;
+      document.getElementById('post-body').innerHTML    = renderMD((fm.body || '').trim());
+      document.getElementById('home-page').style.display = 'none';
+      document.getElementById('post-page').classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'instant' });
+      onPostPage = true;
+      document.querySelectorAll('.nav-link').forEach(a => a.classList.remove('on'));
+    })
+    .catch(() => alert('Could not load: ' + file));
+}
 
-    function updateNav() {
-      if (onPostPage) return;
-      const y = window.scrollY + NAV_H + 10;
-      let cur = SECS[0];
-      SECS.forEach(id => {
-        const el = document.getElementById(id);
-        if (el && y >= el.offsetTop) cur = id;
-      });
-      NIDS.forEach((nid, i) => {
-        const a = document.getElementById(nid);
-        if (a) a.classList.toggle('on', SECS[i] === cur);
-      });
+// ── NAV CLICK ──
+document.querySelectorAll('.nav-link').forEach(link => {
+  link.addEventListener('click', function(e) {
+    e.preventDefault();
+    const id = this.getAttribute('href').replace('#', '');
+    if (onPostPage) {
+      showHome(id);
+    } else {
+      const el = document.getElementById(id);
+      if (el) window.scrollTo({ top: el.offsetTop - NAV_H, behavior: 'smooth' });
     }
-    window.addEventListener('scroll', updateNav, { passive: true });
-    updateNav();
+  });
+});
 
-    // ── PUBLICATIONS PARSER ──
-    function parsePublications(text) {
-      const items = [];
-      const cleaned = text.split('\n').filter(l => !l.trim().startsWith('#')).join('\n');
-      const blocks = [];
-      let cur = [];
-      cleaned.split('\n').forEach(line => {
-        if (line.trim().startsWith('- title:') && cur.length) { blocks.push(cur.join('\n')); cur = [line]; }
-        else cur.push(line);
-      });
-      if (cur.length) blocks.push(cur.join('\n'));
-      blocks.forEach(block => {
-        if (!block.trim()) return;
-        const obj = {};
-        block.split('\n').forEach(line => {
-          const m = line.match(/^\s*-?\s*(\w+):\s*"?([^"]+?)"?\s*$/);
-          if (m) obj[m[1].trim()] = m[2].trim();
-        });
-        if (obj.title) items.push(obj);
-      });
-      return items;
-    }
+// ── SCROLL SPY ──
+const SECS = ['about', 'publications', 'cv', 'blog'];
+const NIDS = ['n-about', 'n-pub', 'n-cv', 'n-blog'];
 
-    // ── FRONTMATTER PARSER ──
-    function parseFrontmatter(text) {
-      const m = text.match(/^---\n([\s\S]*?)\n---/);
-      if (!m) return { body: text };
-      const obj = { body: text.slice(m[0].length).replace(/^\n/, '') };
-      m[1].split('\n').forEach(line => {
-        const lm = line.match(/^(\w+):\s*"?([^"]+?)"?\s*$/);
-        if (lm) obj[lm[1]] = lm[2];
-      });
-      return obj;
-    }
+function updateNav() {
+  if (onPostPage) return;
+  const y = window.scrollY + NAV_H + 10;
+  let cur = SECS[0];
+  SECS.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && y >= el.offsetTop) cur = id;
+  });
+  NIDS.forEach((nid, i) => {
+    const a = document.getElementById(nid);
+    if (a) a.classList.toggle('on', SECS[i] === cur);
+  });
+}
+window.addEventListener('scroll', updateNav, { passive: true });
+updateNav();
 
-    // ── MARKDOWN RENDERER ──
-    function esc(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+// ── PUBLICATIONS PARSER ──
+function parsePublications(text) {
+  const items = [];
+  const cleaned = text.split('\n').filter(l => !l.trim().startsWith('#')).join('\n');
+  const blocks = [];
+  let cur = [];
+  cleaned.split('\n').forEach(line => {
+    if (line.trim().startsWith('- title:') && cur.length) { blocks.push(cur.join('\n')); cur = [line]; }
+    else cur.push(line);
+  });
+  if (cur.length) blocks.push(cur.join('\n'));
+  blocks.forEach(block => {
+    if (!block.trim()) return;
+    const obj = {};
+    block.split('\n').forEach(line => {
+      const m = line.match(/^\s*-?\s*(\w+):\s*"?([^"]+?)"?\s*$/);
+      if (m) obj[m[1].trim()] = m[2].trim();
+    });
+    if (obj.title) items.push(obj);
+  });
+  return items;
+}
 
-    function renderMD(text) {
-      const codeBlocks = [], inlines = [];
-      text = text.replace(/```[\w]*\n?([\s\S]*?)```/g, (_, c) => { codeBlocks.push(c); return '\x00CODE' + (codeBlocks.length - 1) + '\x00'; });
-      text = text.replace(/`([^`]+)`/g, (_, c) => { inlines.push(c); return '\x00IC' + (inlines.length - 1) + '\x00'; });
-      text = text
-        .replace(/^## (.+)$/gm, '<h2>$1</h2>')
-        .replace(/^### (.+)$/gm, '<h3>$1</h3>')
-        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-        .replace(/\*(.+?)\*/g, '<em>$1</em>')
-        .replace(/^- (.+)$/gm, '<li>$1</li>')
-        .replace(/(<li>[\s\S]*?<\/li>\n?)+/g, m => '<ul>' + m + '</ul>');
-      text = text.split('\n\n').map(p => {
-        p = p.trim(); if (!p) return '';
-        if (/^<[hul\x00]/.test(p)) return p;
-        return '<p>' + p.replace(/\n/g, ' ') + '</p>';
-      }).join('\n');
-      codeBlocks.forEach((c, i) => { text = text.replace('\x00CODE' + i + '\x00', '<pre><code>' + esc(c) + '</code></pre>'); });
-      inlines.forEach((c, i) => { text = text.replace('\x00IC' + i + '\x00', '<code>' + esc(c) + '</code>'); });
-      return text;
-    }
+// ── FRONTMATTER PARSER ──
+function parseFrontmatter(text) {
+  const m = text.match(/^---\n([\s\S]*?)\n---/);
+  if (!m) return { body: text };
+  const obj = { body: text.slice(m[0].length).replace(/^\n/, '') };
+  m[1].split('\n').forEach(line => {
+    const lm = line.match(/^(\w+):\s*"?([^"]+?)"?\s*$/);
+    if (lm) obj[lm[1]] = lm[2];
+  });
+  return obj;
+}
 
-    // ── LOAD PUBLICATIONS ──
-    fetch('publications.md')
-      .then(r => { if (!r.ok) throw 0; return r.text(); })
-      .then(text => {
-        const pubs = parsePublications(text);
-        const el = document.getElementById('pub-list');
-        if (!pubs.length) { el.innerHTML = '<div class="empty">No publications yet.</div>'; return; }
-        el.innerHTML = pubs.map(p => `
+// ── MARKDOWN RENDERER ──
+function esc(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function renderMD(text) {
+  const codeBlocks = [], inlines = [];
+  text = text.replace(/```[\w]*\n?([\s\S]*?)```/g, (_, c) => { codeBlocks.push(c); return '\x00CODE'+(codeBlocks.length-1)+'\x00'; });
+  text = text.replace(/`([^`]+)`/g, (_, c) => { inlines.push(c); return '\x00IC'+(inlines.length-1)+'\x00'; });
+  text = text
+    .replace(/^## (.+)$/gm, '<h2>$1</h2>')
+    .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/^- (.+)$/gm, '<li>$1</li>')
+    .replace(/(<li>[\s\S]*?<\/li>\n?)+/g, m => '<ul>'+m+'</ul>');
+  text = text.split('\n\n').map(p => {
+    p = p.trim(); if (!p) return '';
+    if (/^<[hul\x00]/.test(p)) return p;
+    return '<p>' + p.replace(/\n/g,' ') + '</p>';
+  }).join('\n');
+  codeBlocks.forEach((c,i) => { text = text.replace('\x00CODE'+i+'\x00', '<pre><code>'+esc(c)+'</code></pre>'); });
+  inlines.forEach((c,i) => { text = text.replace('\x00IC'+i+'\x00', '<code>'+esc(c)+'</code>'); });
+  return text;
+}
+
+// ── LOAD PUBLICATIONS ──
+fetch('publications.md')
+  .then(r => { if (!r.ok) throw 0; return r.text(); })
+  .then(text => {
+    const pubs = parsePublications(text);
+    const el = document.getElementById('pub-list');
+    if (!pubs.length) { el.innerHTML = '<div class="empty">No publications yet.</div>'; return; }
+    el.innerHTML = pubs.map(p => `
       <div class="pub">
-        <div class="pub-year">${p.year || ''}</div>
+        <div class="pub-year">${p.year||''}</div>
         <div class="pub-title">${p.title}</div>
-        <div class="pub-authors">${p.authors || ''}</div>
-        <div class="pub-venue">${p.venue || ''}</div>
+        <div class="pub-authors">${p.authors||''}</div>
+        <div class="pub-venue">${p.venue||''}</div>
         <div class="pub-actions">
-          ${p.pdf && p.pdf !== '#' ? `<a href="${p.pdf}" target="_blank" rel="noopener">PDF ↗</a>` : ''}
-          ${p.doi && p.doi !== '#' ? `<a href="${p.doi}" target="_blank" rel="noopener">DOI ↗</a>` : ''}
+          ${p.pdf && p.pdf!=='#' ? `<a href="${p.pdf}" target="_blank" rel="noopener">PDF ↗</a>` : ''}
+          ${p.doi && p.doi!=='#' ? `<a href="${p.doi}" target="_blank" rel="noopener">DOI ↗</a>` : ''}
         </div>
       </div>`).join('');
-      })
-      .catch(() => { document.getElementById('pub-list').innerHTML = '<div class="empty">No publications yet.</div>'; });
+  })
+  .catch(() => { document.getElementById('pub-list').innerHTML = '<div class="empty">No publications yet.</div>'; });
 
-    // ── LOAD BLOGS ──
-    Promise.all(
-      Array.from({ length: 20 }, (_, i) => 'blog' + (i + 1) + '.md').map(file =>
-        fetch('blogs/' + file)
-          .then(r => r.ok ? r.text().then(t => ({ file, ...parseFrontmatter(t) })) : null)
-          .catch(() => null)
-      )
-    ).then(results => {
-      const posts = results.filter(Boolean);
-      const el = document.getElementById('blog-list');
-      if (!posts.length) { el.innerHTML = '<div class="empty">No posts yet.</div>'; return; }
-      el.innerHTML = posts.map(p => `
-    <div class="post">
-      <div class="post-date">${p.date || ''}</div>
-      <a class="post-title" href="#" data-file="${p.file}" data-title="${(p.title || '').replace(/"/g, '&quot;')}" data-date="${p.date || ''}">${p.title || p.file}</a>
-      <div class="post-excerpt">${p.excerpt || ''}</div>
-    </div>`).join('');
-      document.querySelectorAll('a.post-title[data-file]').forEach(a => {
-        a.addEventListener('click', e => {
-          e.preventDefault();
-          showPost(a.dataset.file, a.dataset.title, a.dataset.date);
-        });
+// ── LOAD BLOGS ──
+// Reads blogs/index.json for the list of files — works on GitHub Pages
+fetch('blogs/index.json')
+  .then(r => { if (!r.ok) throw new Error('No index.json'); return r.json(); })
+  .then(files => Promise.all(
+    files.map(file =>
+      fetch('blogs/' + file)
+        .then(r => r.ok ? r.text().then(t => ({ file, ...parseFrontmatter(t) })) : null)
+        .catch(() => null)
+    )
+  ))
+  .then(results => {
+    const posts = results.filter(Boolean);
+    const el = document.getElementById('blog-list');
+    if (!posts.length) {
+      el.innerHTML = '<div class="empty">No posts yet. Add a .md file to blogs/ and list it in blogs/index.json.</div>';
+      return;
+    }
+    el.innerHTML = posts.map(p => `
+      <div class="post">
+        <div class="post-date">${p.date||''}</div>
+        <a class="post-title" href="#" data-file="${p.file}" data-title="${(p.title||'').replace(/"/g,'&quot;')}" data-date="${p.date||''}">${p.title||p.file}</a>
+        <div class="post-excerpt">${p.excerpt||''}</div>
+      </div>`).join('');
+    document.querySelectorAll('a.post-title[data-file]').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        showPost(a.dataset.file, a.dataset.title, a.dataset.date);
       });
     });
-  </script>
+  })
+  .catch(() => {
+    document.getElementById('blog-list').innerHTML = '<div class="empty">No posts yet.</div>';
+  });
+</script>
 </body>
-
 </html>

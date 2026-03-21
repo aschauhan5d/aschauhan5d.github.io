@@ -596,11 +596,11 @@
         <div class="cv-group">
           <div class="cv-group-label">Research</div>
           <div class="cv-entry">
-            <div class="cv-year">Active</div>
-            <div>
+            <!-- <div class="cv-year">Active</div> -->
+            <!-- <div>
               <div class="cv-title">3D Volumetric Segmentation with Vision Transformers</div>
               <div class="cv-sub">Adapter fine-tuning for medical imaging — LoRA, VPT, AdaptFormer</div>
-            </div>
+            </div> -->
           </div>
           <div class="cv-entry">
             <div class="cv-year">Active</div>
@@ -803,7 +803,7 @@
     ).then(results => {
       const posts = results.filter(Boolean);
       const el = document.getElementById('blog-list');
-      if (!posts.length) { el.innerHTML = '<div class="empty">No posts yet. Add blog1.md to the blogs/ folder.</div>'; return; }
+      if (!posts.length) { el.innerHTML = '<div class="empty">No posts yet.</div>'; return; }
       el.innerHTML = posts.map(p => `
     <div class="post">
       <div class="post-date">${p.date || ''}</div>

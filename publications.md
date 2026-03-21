@@ -9,16 +9,3 @@
 #   pdf: "https://link-to-pdf.com"
 #   doi: "https://doi.org/xxxxx"
 
-- title: "Deep Learning Approaches for 3D Medical Image Segmentation"
-  authors: "Abhishek Singh Chauhan, Co-Author A, Co-Author B"
-  venue: "IEEE Conference on Computer Vision and Pattern Recognition (CVPR)"
-  year: 2026
-  pdf: "#"
-  doi: "#"
-
-- title: "Adapter Fine-Tuning of Vision Transformers for Volumetric MRI Analysis"
-  authors: "Abhishek Singh Chauhan, Supervisor Name"
-  venue: "Medical Image Analysis Journal"
-  year: 2025
-  pdf: "#"
-  doi: "#"

@@ -1,27 +1,138 @@
+# 📘 PyTorch Deep Learning — Complete Tutorial
+
+> Every concept from tensors to transformers — with working code, diagrams, formulas, and notes.
+
 ---
-title: "My PhD Journey — First 6 Months"
-date: "January 5, 2026"
-excerpt: "Reflections on starting a PhD in Computer Application, the challenges of research, and what I've learned about deep learning along the way."
+
+## 📑 Table of Contents
+
+1. Tensors & Operations  
+2. Autograd & Backpropagation  
+3. nn.Module  
+4. Optimizers  
+5. Loss Functions  
+6. Data Pipeline  
+
 ---
 
-## The Beginning
+# 🧠 Chapter 1 — Tensors & Operations
 
-Starting a PhD is equal parts exciting and overwhelming. Six months in, I want to share what I've learned — not just about deep learning, but about the research process itself.
+## Creating Tensors
 
-## Finding My Research Direction
+```python
+import torch
+import numpy as np
 
-My first challenge was narrowing down a research question. I started broadly interested in "AI for healthcare" and gradually zeroed in on **3D volumetric segmentation with Vision Transformers** — specifically how to make large pretrained models work on small medical datasets.
+t1 = torch.tensor([1.0, 2.0, 3.0])
 
-## What I've Learned
+zeros = torch.zeros(3, 4)
+ones  = torch.ones(2, 3)
+rand  = torch.rand(2, 3)
+randn = torch.randn(2, 3)
 
-**Reading papers is a skill.** I now read 2-3 papers per week. The key is understanding *why* a paper makes the choices it does, not just *what* it does.
+arr = np.array([1, 2, 3])
+t2  = torch.from_numpy(arr)
 
-**Experiments fail — a lot.** My first three months were mostly failed experiments. That's normal. Keep notes on everything.
+t3 = torch.arange(0, 10, 2)
+t4 = torch.linspace(0, 1, 5)
+```
 
-**Community matters.** Connecting with other researchers on Twitter/X and attending virtual seminars has been invaluable.
+---
 
-## What's Next
+## Shape Manipulation
 
-I'm currently running experiments on adapter fine-tuning strategies for MRI segmentation. Hoping to submit my first paper by mid-2026.
+```python
+x = torch.randn(2, 3, 4)
+y = x.view(6, 4)
+z = x.reshape(6, 4)
+```
 
-If you're considering a PhD in AI/ML — go for it. It's hard, but deeply rewarding.
+---
+
+## Math Operations
+
+```python
+a = torch.tensor([[1.,2.],[3.,4.]])
+b = torch.tensor([[5.,6.],[7.,8.]])
+
+c = a + b
+mm = torch.matmul(a, b)
+```
+
+---
+
+# 🔁 Chapter 2 — Autograd
+
+```python
+import torch
+
+x = torch.tensor([2.0], requires_grad=True)
+y = torch.tensor([3.0], requires_grad=True)
+
+z = x**2 + y * x
+z.backward()
+
+print(x.grad)
+print(y.grad)
+```
+
+---
+
+# 🧩 Chapter 3 — nn.Module
+
+```python
+import torch.nn as nn
+import torch.nn.functional as F
+
+class MLP(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.fc1 = nn.Linear(784, 256)
+        self.fc2 = nn.Linear(256, 10)
+
+    def forward(self, x):
+        x = F.relu(self.fc1(x))
+        return self.fc2(x)
+```
+
+---
+
+# ⚙️ Chapter 4 — Optimizers
+
+```python
+import torch.optim as optim
+
+optimizer = optim.Adam(model.parameters(), lr=1e-3)
+```
+
+---
+
+# 📉 Chapter 5 — Loss Functions
+
+```python
+import torch.nn as nn
+
+loss = nn.CrossEntropyLoss()
+```
+
+---
+
+# 📦 Chapter 6 — Dataset
+
+```python
+from torch.utils.data import Dataset
+
+class MyDataset(Dataset):
+    def __init__(self, data):
+        self.data = data
+
+    def __getitem__(self, idx):
+        return self.data[idx]
+```
+
+---
+
+# 🎯 Notes
+
+- PyTorch is dynamic and flexible
+- Used in AI, CV, NLP

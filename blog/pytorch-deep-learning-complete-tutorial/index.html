@@ -7,8 +7,8 @@
   <meta name="description" content="Every concept from tensors to transformers — with working code, diagrams, formulas, and notes." />
   <meta name="author" content="Abhishek Singh Chauhan" />
   <link rel="canonical" href="https://aschauhan5d.github.io/blog/pytorch-deep-learning-complete-tutorial/" />
-  <meta name="theme-color" content="#fafaf7" media="(prefers-color-scheme: light)" />
-  <meta name="theme-color" content="#141614" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#121416" media="(prefers-color-scheme: dark)" />
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="Abhishek Singh Chauhan" />
   <meta property="og:title" content="PyTorch Deep Learning — Complete Tutorial" />
@@ -19,27 +19,30 @@
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;1,300&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600&family=JetBrains+Mono:wght@400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../../assets/style.css" />
   <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "PyTorch Deep Learning — Complete Tutorial", "description": "Every concept from tensors to transformers — with working code, diagrams, formulas, and notes.", "datePublished": "2026-03-22", "url": "https://aschauhan5d.github.io/blog/pytorch-deep-learning-complete-tutorial/", "author": {"@type": "Person", "name": "Abhishek Singh Chauhan", "url": "https://aschauhan5d.github.io/"}}</script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
   <nav class="nav" aria-label="Site">
-    <a class="nav-name" href="../../">Abhishek Singh Chauhan</a>
-    <div class="nav-links">
-      <a href="../../#about">About</a>
-      <a href="../../#research">Research</a>
-      <a href="../../#publications">Publications</a>
-      <a href="../../#blog" class="on">Blog</a>
+    <div class="nav-inner">
+      <a class="nav-name" href="../../">Abhishek Singh Chauhan</a>
+      <div class="nav-links">
+        <a href="../../#about">About</a>
+        <a href="../../#news">News</a>
+        <a href="../../#publications">Publications</a>
+        <a href="../../#research">Research</a>
+        <a href="../../#writing" class="on">Writing</a>
+      </div>
     </div>
   </nav>
-  <main class="wrap" id="main">
-    <a class="post-back" href="../../#blog">← All posts</a>
+  <main class="wrap post-wrap" id="main">
+    <a class="back" href="../../#writing">← All writing</a>
     <article>
       <header class="post-header">
         <h1>PyTorch Deep Learning — Complete Tutorial</h1>
-        <p class="item-meta"><time datetime="2026-03-22">March 22, 2026</time> · 1 min read</p>
+        <p class="post-meta">Abhishek Singh Chauhan · <time datetime="2026-03-22">March 22, 2026</time> · 1 min read</p>
       </header>
       <div class="post-body" id="post-body">
         <noscript><pre style="white-space:pre-wrap">## 📑 Table of Contents
@@ -176,8 +179,7 @@ class MyDataset(Dataset):
 - Used in AI, CV, NLP</pre></noscript>
       </div>
     </article>
-    <hr />
-    <nav class="item" aria-label="More posts" style="border:none;padding-top:0"><div class="item-meta">Previous</div><a class="item-title" href="../getting-started-with-vision-transformers-in-pytorch/">Getting Started with Vision Transformers in PyTorch</a></nav>
+    <nav class="post-nav" aria-label="More posts"><a href="../getting-started-with-vision-transformers-in-pytorch/"><small>← Previous</small>Getting Started with Vision Transformers in PyTorch</a></nav>
     <footer class="footer">
       <span>© 2026 Abhishek Singh Chauhan</span>
       <a href="../../">aschauhan5d.github.io</a>
@@ -185,8 +187,8 @@ class MyDataset(Dataset):
   </main>
 
   <script id="post-md" type="application/json">"## 📑 Table of Contents\n\n1. Tensors & Operations  \n2. Autograd & Backpropagation  \n3. nn.Module  \n4. Optimizers  \n5. Loss Functions  \n6. Data Pipeline  \n\n---\n\n# 🧠 Chapter 1 — Tensors & Operations\n\n## Creating Tensors\n\n```python\nimport torch\nimport numpy as np\n\nt1 = torch.tensor([1.0, 2.0, 3.0])\n\nzeros = torch.zeros(3, 4)\nones  = torch.ones(2, 3)\nrand  = torch.rand(2, 3)\nrandn = torch.randn(2, 3)\n\narr = np.array([1, 2, 3])\nt2  = torch.from_numpy(arr)\n\nt3 = torch.arange(0, 10, 2)\nt4 = torch.linspace(0, 1, 5)\n```\n\n---\n\n## Shape Manipulation\n\n```python\nx = torch.randn(2, 3, 4)\ny = x.view(6, 4)\nz = x.reshape(6, 4)\n```\n\n---\n\n## Math Operations\n\n```python\na = torch.tensor([[1.,2.],[3.,4.]])\nb = torch.tensor([[5.,6.],[7.,8.]])\n\nc = a + b\nmm = torch.matmul(a, b)\n```\n\n---\n\n# 🔁 Chapter 2 — Autograd\n\n```python\nimport torch\n\nx = torch.tensor([2.0], requires_grad=True)\ny = torch.tensor([3.0], requires_grad=True)\n\nz = x**2 + y * x\nz.backward()\n\nprint(x.grad)\nprint(y.grad)\n```\n\n---\n\n# 🧩 Chapter 3 — nn.Module\n\n```python\nimport torch.nn as nn\nimport torch.nn.functional as F\n\nclass MLP(nn.Module):\n    def __init__(self):\n        super().__init__()\n        self.fc1 = nn.Linear(784, 256)\n        self.fc2 = nn.Linear(256, 10)\n\n    def forward(self, x):\n        x = F.relu(self.fc1(x))\n        return self.fc2(x)\n```\n\n---\n\n# ⚙️ Chapter 4 — Optimizers\n\n```python\nimport torch.optim as optim\n\noptimizer = optim.Adam(model.parameters(), lr=1e-3)\n```\n\n---\n\n# 📉 Chapter 5 — Loss Functions\n\n```python\nimport torch.nn as nn\n\nloss = nn.CrossEntropyLoss()\n```\n\n---\n\n# 📦 Chapter 6 — Dataset\n\n```python\nfrom torch.utils.data import Dataset\n\nclass MyDataset(Dataset):\n    def __init__(self, data):\n        self.data = data\n\n    def __getitem__(self, idx):\n        return self.data[idx]\n```\n\n---\n\n# 🎯 Notes\n\n- PyTorch is dynamic and flexible\n- Used in AI, CV, NLP"</script>
-  <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
   <script>
     const md = JSON.parse(document.getElementById('post-md').textContent);
     const el = document.getElementById('post-body');

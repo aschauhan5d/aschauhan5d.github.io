@@ -1,19 +1,22 @@
-name: Unpack site update
+name: Build site
 on:
   push:
-    paths: ["site-update.zip", ".github/workflows/unpack.yml"]
+    branches: [main]
+    paths-ignore: ["site-update.zip", ".github/**"]
+  workflow_dispatch:
 permissions:
   contents: write
 jobs:
-  unpack:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python3 build.py
       - run: |
-          unzip -o site-update.zip -x '.github/*'
-          rm -f site-update.zip blogs/index.json
           git config user.name "github-actions[bot]"
           git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
-          git add -A
-          git commit -m "Apply site update"
-          git push
+          git add -A index.html sitemap.xml blog
+          git diff --cached --quiet || (git commit -m "Rebuild site" && git push)

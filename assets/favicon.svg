@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <style>
+    .bg { fill: #f0f6f1; stroke: #4a7a5e; }
+    .t { fill: #2f5e46; }
+    @media (prefers-color-scheme: dark) { .bg { fill: #1b231e; stroke: #8fc1a3; } .t { fill: #b5dcc4; } }
+  </style>
+  <circle class="bg" cx="32" cy="32" r="30" stroke-width="2"/>
+  <text class="t" x="32" y="41" text-anchor="middle" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="24" letter-spacing="1">AC</text>
+</svg>

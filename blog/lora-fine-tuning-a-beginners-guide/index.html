@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LoRA Fine-Tuning: A Beginner&#x27;s Guide — Abhishek Singh Chauhan</title>
+  <meta name="description" content="Low-Rank Adaptation (LoRA) lets you fine-tune large models with very few trainable parameters. Here&#x27;s how I applied it to medical imaging." />
+  <meta name="author" content="Abhishek Singh Chauhan" />
+  <link rel="canonical" href="https://aschauhan5d.github.io/blog/lora-fine-tuning-a-beginners-guide/" />
+  <meta name="theme-color" content="#fafaf7" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#141614" media="(prefers-color-scheme: dark)" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Abhishek Singh Chauhan" />
+  <meta property="og:title" content="LoRA Fine-Tuning: A Beginner&#x27;s Guide" />
+  <meta property="og:description" content="Low-Rank Adaptation (LoRA) lets you fine-tune large models with very few trainable parameters. Here&#x27;s how I applied it to medical imaging." />
+  <meta property="og:url" content="https://aschauhan5d.github.io/blog/lora-fine-tuning-a-beginners-guide/" />
+  <meta property="article:published_time" content="2026-02-22" />
+  <meta name="twitter:card" content="summary" />
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;1,300&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../assets/style.css" />
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "LoRA Fine-Tuning: A Beginner's Guide", "description": "Low-Rank Adaptation (LoRA) lets you fine-tune large models with very few trainable parameters. Here's how I applied it to medical imaging.", "datePublished": "2026-02-22", "url": "https://aschauhan5d.github.io/blog/lora-fine-tuning-a-beginners-guide/", "author": {"@type": "Person", "name": "Abhishek Singh Chauhan", "url": "https://aschauhan5d.github.io/"}}</script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <nav class="nav" aria-label="Site">
+    <a class="nav-name" href="../../">Abhishek Singh Chauhan</a>
+    <div class="nav-links">
+      <a href="../../#about">About</a>
+      <a href="../../#research">Research</a>
+      <a href="../../#publications">Publications</a>
+      <a href="../../#blog" class="on">Blog</a>
+    </div>
+  </nav>
+  <main class="wrap" id="main">
+    <a class="post-back" href="../../#blog">← All posts</a>
+    <article>
+      <header class="post-header">
+        <h1>LoRA Fine-Tuning: A Beginner&#x27;s Guide</h1>
+        <p class="item-meta"><time datetime="2026-02-22">February 22, 2026</time> · 1 min read</p>
+      </header>
+      <div class="post-body" id="post-body">
+        <noscript><pre style="white-space:pre-wrap">## What is LoRA?
+
+Low-Rank Adaptation (LoRA) is a parameter-efficient fine-tuning technique. Instead of updating all model weights, it injects small trainable rank-decomposition matrices into each layer.
+
+This means you can fine-tune a large model using a fraction of the compute and memory.
+
+## Why I Used It
+
+For my PhD research on 3D medical image segmentation, I needed to adapt a large pretrained ViT to MRI volumes — but with very limited GPU memory and labeled data.
+
+LoRA was perfect: I kept the ViT backbone frozen and only trained the low-rank adapters.
+
+```python
+import loralib as lora
+
+# Replace a linear layer with a LoRA-enabled one
+layer = lora.Linear(768, 768, r=16)  # r = rank
+
+# Only mark LoRA params as trainable
+lora.mark_only_lora_as_trainable(model)
+
+# Count trainable params
+trainable = sum(p.numel() for p in model.parameters() if p.requires_grad)
+print(f&quot;Trainable parameters: {trainable:,}&quot;)
+```
+
+## Results
+
+With rank r=16, I achieved comparable performance to full fine-tuning using only ~1% of the original trainable parameters.
+
+## Conclusion
+
+LoRA is an excellent choice when you have limited compute or data. Highly recommended for anyone working with large pretrained models.</pre></noscript>
+      </div>
+    </article>
+    <hr />
+    <nav class="item" aria-label="More posts" style="border:none;padding-top:0"><div class="item-meta" style="margin-top:.8rem">Next</div><a class="item-title" href="../getting-started-with-vision-transformers-in-pytorch/">Getting Started with Vision Transformers in PyTorch</a></nav>
+    <footer class="footer">
+      <span>© 2026 Abhishek Singh Chauhan</span>
+      <a href="../../">aschauhan5d.github.io</a>
+    </footer>
+  </main>
+
+  <script id="post-md" type="application/json">"## What is LoRA?\n\nLow-Rank Adaptation (LoRA) is a parameter-efficient fine-tuning technique. Instead of updating all model weights, it injects small trainable rank-decomposition matrices into each layer.\n\nThis means you can fine-tune a large model using a fraction of the compute and memory.\n\n## Why I Used It\n\nFor my PhD research on 3D medical image segmentation, I needed to adapt a large pretrained ViT to MRI volumes — but with very limited GPU memory and labeled data.\n\nLoRA was perfect: I kept the ViT backbone frozen and only trained the low-rank adapters.\n\n```python\nimport loralib as lora\n\n# Replace a linear layer with a LoRA-enabled one\nlayer = lora.Linear(768, 768, r=16)  # r = rank\n\n# Only mark LoRA params as trainable\nlora.mark_only_lora_as_trainable(model)\n\n# Count trainable params\ntrainable = sum(p.numel() for p in model.parameters() if p.requires_grad)\nprint(f\"Trainable parameters: {trainable:,}\")\n```\n\n## Results\n\nWith rank r=16, I achieved comparable performance to full fine-tuning using only ~1% of the original trainable parameters.\n\n## Conclusion\n\nLoRA is an excellent choice when you have limited compute or data. Highly recommended for anyone working with large pretrained models."</script>
+  <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+  <script>
+    const md = JSON.parse(document.getElementById('post-md').textContent);
+    const el = document.getElementById('post-body');
+    el.innerHTML = marked.parse(md);
+    el.querySelectorAll('a[href^="http"]').forEach(a => { a.target = '_blank'; a.rel = 'noopener'; });
+    el.querySelectorAll('pre code').forEach(code => {
+      if (window.hljs) hljs.highlightElement(code);
+      const btn = document.createElement('button');
+      btn.className = 'copy-btn'; btn.type = 'button'; btn.textContent = 'Copy';
+      btn.onclick = () => navigator.clipboard.writeText(code.innerText).then(() => {
+        btn.textContent = 'Copied'; setTimeout(() => btn.textContent = 'Copy', 1500);
+      });
+      code.parentElement.appendChild(btn);
+    });
+  </script>
+</body>
+</html>

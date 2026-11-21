@@ -7,5 +7,5 @@
 # - date: "June 2026"
 #   text: "Our paper on ... was accepted at [MICCAI 2026](https://conferences.miccai.org/2026/)."
 
-- date: "2026"
-  text: "Started my PhD in Computer Application at Graphic Era Deemed to be University, Dehradun, working on Vision Transformers for medical image segmentation."
+# - date: "2026"
+#   text: "Started my PhD in Computer Application at Graphic Era Deemed to be University, Dehradun, working on Vision Transformers for medical image segmentation."

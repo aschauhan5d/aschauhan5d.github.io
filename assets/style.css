@@ -378,3 +378,5 @@ a.pub-title:hover { color: var(--accent); }
   .news { max-height: none; overflow: visible; }
   a { color: inherit; }
 }
+
+[hidden] { display: none !important; }

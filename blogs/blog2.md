@@ -1,4 +1,5 @@
 ---
+draft: "true"
 title: "LoRA Fine-Tuning: A Beginner's Guide"
 date: "February 22, 2026"
 excerpt: "Low-Rank Adaptation (LoRA) lets you fine-tune large models with very few trainable parameters. Here's how I applied it to medical imaging."

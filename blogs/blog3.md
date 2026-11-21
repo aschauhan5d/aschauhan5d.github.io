@@ -1,4 +1,5 @@
 ---
+draft: "true"
 title: "PyTorch Deep Learning — Complete Tutorial"
 date: "March 22, 2026"
 excerpt: "Every concept from tensors to transformers — with working code, diagrams, formulas, and notes."

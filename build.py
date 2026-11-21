@@ -5,6 +5,7 @@ build.py — regenerates the site from your source files.
   blogs/*.md        → blog/<slug>/index.html, the Writing list and News items
   publications.md   → Publications section (with automatic BibTeX)
   news.md           → News section
+  research.md       → Research Projects section
   photo.jpg         → profile photo (also .jpeg / .png / .webp, in the root or assets/)
   cv.pdf            → "CV" button
   sitemap.xml       → regenerated
@@ -283,6 +284,81 @@ for i, p in enumerate(posts):
 
 # ── publications ─────────────────────────────────────────────────────────
 pubs = [p for p in parse_entries(ROOT / "publications.md") if p.get("title")]
+
+# ── publications from ORCID (automatic) ──────────────────────────────────
+# Every build also pulls the works marked "Everyone" on your ORCID record.
+# Papers already in publications.md (same DOI or title) are not repeated,
+# so you can still add extras there (thumbnail, code link, award, tldr).
+ORCID_ID = "0009-0005-3507-6499"
+ORCID_TYPES = {"journal-article": "journal", "conference-paper": "conference",
+               "conference-abstract": "conference", "conference-poster": "conference",
+               "preprint": "preprint", "working-paper": "preprint", "book-chapter": "chapter"}
+
+
+def _orcid_get(path):
+    import urllib.request
+    req = urllib.request.Request(f"https://pub.orcid.org/v3.0/{ORCID_ID}/{path}",
+                                 headers={"Accept": "application/json", "User-Agent": "aschauhan5d-site-build"})
+    with urllib.request.urlopen(req, timeout=20) as r:
+        return json.load(r)
+
+
+def _val(d, *keys):
+    for k in keys:
+        if not isinstance(d, dict):
+            return ""
+        d = d.get(k)
+    return d if isinstance(d, str) else ""
+
+
+def orcid_pubs():
+    out = []
+    try:
+        groups = _orcid_get("works").get("group") or []
+    except Exception as e:
+        print(f"! ORCID not reachable ({e}); using publications.md only")
+        return out
+    for g in groups:
+        summary = (g.get("work-summary") or [{}])[0]
+        try:
+            w = _orcid_get(f"work/{summary['put-code']}")
+        except Exception:
+            w = summary
+        title = _val(w, "title", "title", "value")
+        if not title:
+            continue
+        p = {"title": title, "type": ORCID_TYPES.get(w.get("type") or "", "")}
+        venue = _val(w, "journal-title", "value")
+        if venue:
+            p["venue"] = venue
+        year = _val(w, "publication-date", "year", "value")
+        if year:
+            p["year"] = year
+        names = [_val(c, "credit-name", "value") for c in (w.get("contributors") or {}).get("contributor") or []]
+        p["authors"] = ", ".join(n for n in names if n) or AUTHOR
+        for x in (w.get("external-ids") or {}).get("external-id") or []:
+            kind, value = x.get("external-id-type"), x.get("external-id-value") or ""
+            if kind == "doi" and value and "doi" not in p:
+                p["doi"] = value if value.startswith("http") else "https://doi.org/" + value
+            elif kind == "arxiv" and value and "arxiv" not in p:
+                p["arxiv"] = value if value.startswith("http") else "https://arxiv.org/abs/" + value.split(":")[-1]
+        link = _val(w, "url", "value")
+        if link and not any(k in p for k in ("doi", "arxiv")):
+            p["pdf"] = link
+        out.append(p)
+    return out
+
+
+def _key(p):
+    return re.sub(r"[^a-z0-9]", "", p.get("title", "").lower())
+
+
+_doi = lambda p: re.sub(r"^https?://(dx\.)?doi\.org/", "", p.get("doi", "")).lower()
+_seen_titles = {_key(p) for p in pubs}
+_seen_dois = {_doi(p) for p in pubs if p.get("doi")}
+_from_orcid = [p for p in orcid_pubs() if _key(p) not in _seen_titles and (not p.get("doi") or _doi(p) not in _seen_dois)]
+pubs += _from_orcid
+print(f"  {len(_from_orcid)} publication(s) added from ORCID")
 pubs.sort(key=lambda p: str(p.get("year", "")), reverse=True)
 
 
@@ -375,6 +451,25 @@ news_html = "".join(f'\n        <li><time>{label}</time><span>{text}</span></li>
     or '\n        <li><time></time><span>No news yet.</span></li>'
 
 
+# ── research projects ────────────────────────────────────────────────────
+research = [r for r in parse_entries(ROOT / "research.md") if r.get("title")]
+research_html = "".join(f"""
+      <div class="entry">
+        <div class="entry-title">{esc(r['title'])}</div>
+        {f'<div class="entry-when">{esc(r["when"])}</div>' if r.get("when") else ""}
+        {f'<div class="entry-sub">{inline_md(r["text"])}</div>' if r.get("text") else ""}
+        {('<div class="entry-tags">' + "".join(f'<span class="tag">{esc(t.strip())}</span>' for t in r["tags"].split(",") if t.strip()) + "</div>") if r.get("tags") else ""}
+      </div>""" for r in research)
+
+
+def show_section(doc, sid, visible):
+    """Hides a section (and its menu link) while it has nothing to show."""
+    flag = "" if visible else " hidden"
+    doc = re.sub(rf'<section id="{sid}"( hidden)?', f'<section id="{sid}"{flag}', doc)
+    doc = re.sub(rf'<a href="#{sid}"( hidden)?>', f'<a href="#{sid}"{flag}>', doc)
+    return doc
+
+
 # ── writing list ─────────────────────────────────────────────────────────
 posts_html = "".join(f"""
         <li>
@@ -405,6 +500,10 @@ doc = replace_block(doc, "CV", cv_html)
 doc = replace_block(doc, "NEWS", news_html + "\n        ")
 doc = replace_block(doc, "PUBLICATIONS", pubs_html + "\n      ")
 doc = replace_block(doc, "POSTS", posts_html + "\n        ")
+doc = replace_block(doc, "RESEARCH", research_html + ("\n      " if research_html else ""))
+doc = show_section(doc, "news", bool(news))
+doc = show_section(doc, "research", bool(research))
+doc = show_section(doc, "writing", bool(posts))
 doc = replace_block(doc, "UPDATED", f"Last updated {TODAY.strftime('%B %Y')}")
 INDEX.write_text(doc, encoding="utf-8")
 

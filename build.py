@@ -413,6 +413,13 @@ def pub_html(p):
     )
     bib = esc(p.get("bibtex") or make_bibtex(p))
     links += f'<details><summary>BibTeX</summary><pre class="bibtex">{bib}</pre></details>'
+    kind = {"journal": "Journal", "conference": "Conference", "preprint": "Preprint",
+            "chapter": "Book chapter"}.get(p.get("type", "").lower(), "")
+    pubr = next((x for x in ("IEEE", "ACM", "Springer", "Elsevier", "Wiley", "MDPI")
+                 if x.lower() in (p.get("venue", "") + " " + p.get("doi", "")).lower()
+                 or (x == "IEEE" and "10.1109/" in p.get("doi", ""))), "")
+    tag = " · ".join(x for x in (kind, pubr) if x)
+    tag_html = f'<span class="pub-type">{esc(tag)}</span>\n          ' if tag else ""
     thumb = (f'<img class="pub-thumb" src="{esc(p["image"])}" alt="" loading="lazy" />'
              if p.get("image") else "")
     classes = "pub" + ("" if thumb else " no-thumb") + (" highlight" if p.get("highlight", "").lower() == "true" else "")
@@ -420,7 +427,7 @@ def pub_html(p):
       <article class="{classes}">
         {thumb}
         <div>
-          {title}{award}
+          {tag_html}{title}{award}
           <div class="pub-authors">{bold_me(p.get("authors", ""))}</div>
           <div class="pub-venue">{venue}</div>
           {f'<p class="pub-tldr">{inline_md(p["tldr"])}</p>' if p.get("tldr") else ""}

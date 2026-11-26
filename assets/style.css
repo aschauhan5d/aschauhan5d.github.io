@@ -165,6 +165,7 @@ h2.sec::after { content: ""; flex: 1; height: 1px; background: var(--line); }
 .bio p:last-child { margin-bottom: 0; }
 
 .photo {
+  box-shadow: 0 0 0 4px var(--bg), 0 0 0 5px var(--line);
   width: 200px; height: auto; aspect-ratio: 1 / 1; border-radius: 50%;
   object-fit: cover; display: block;
   background: var(--panel); border: 1px solid var(--line);
@@ -191,12 +192,20 @@ h2.sec::after { content: ""; flex: 1; height: 1px; background: var(--line); }
 .links a:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; background: var(--accent-soft); }
 .links svg { width: 15px; height: 15px; flex-shrink: 0; }
 
-.interests {
-  margin-top: 1.5rem; padding: 1rem 1.2rem;
-  background: var(--panel); border-radius: 10px;
-  font: 400 15px/1.6 var(--sans); color: var(--muted);
+.interests { margin-top: 1.75rem; }
+.interests-label { display: block; font: 600 13px var(--sans); color: var(--heading); margin-bottom: .55rem; }
+.chips { list-style: none; display: flex; flex-wrap: wrap; gap: .45rem; }
+.chips li {
+  font: 500 13.5px var(--sans); color: var(--accent);
+  background: var(--accent-soft); border-radius: 999px; padding: .3rem .8rem;
 }
-.interests strong { color: var(--heading); font-weight: 600; }
+.status {
+  display: inline-flex; align-items: center; gap: .5rem;
+  font: 500 13.5px var(--sans); color: var(--muted);
+  margin: -.35rem 0 1.25rem;
+}
+.status a { font-weight: 500; }
+.status .dot { width: 8px; height: 8px; border-radius: 50%; background: #2e9d5b; box-shadow: 0 0 0 3px color-mix(in srgb, #2e9d5b 22%, transparent); }
 
 /* ── NEWS ── */
 .news { list-style: none; }
@@ -243,6 +252,7 @@ a.pub-title:hover { color: var(--accent); }
 .pub-links details { display: contents; }
 .pub-links details[open] summary { background: var(--accent-soft); border-color: var(--accent); }
 .bibtex {
+  position: relative;
   flex-basis: 100%; margin-top: .3rem;
   font: 12.5px/1.55 var(--mono); white-space: pre-wrap; overflow-wrap: anywhere;
   max-width: 100%; overflow-x: auto;
@@ -397,7 +407,7 @@ a.pub-title:hover { color: var(--accent); }
 }
 
 @media print {
-  .theme-toggle,
+  .theme-toggle, .bib-copy, .status,
   .nav, .skip, .links svg, .copy-btn { display: none !important; }
   body { font-size: 11pt; }
   .news { max-height: none; overflow: visible; }
@@ -405,3 +415,21 @@ a.pub-title:hover { color: var(--accent); }
 }
 
 [hidden] { display: none !important; }
+
+.bib-copy {
+  position: absolute; top: .45rem; right: .45rem;
+  font: 500 11.5px var(--sans); color: var(--accent);
+  background: var(--bg); border: 1px solid var(--line); border-radius: 5px;
+  padding: .15rem .55rem; cursor: pointer;
+}
+.bib-copy:hover { border-color: var(--accent); }
+.pub { border: 1px solid var(--line); margin: 0; padding: 1.1rem 1.2rem; }
+.pub + .pub { margin-top: .8rem; }
+.pub-type {
+  display: inline-block; font: 600 11px var(--sans); letter-spacing: .04em; text-transform: uppercase;
+  color: var(--muted); background: var(--panel); border-radius: 4px; padding: .1rem .45rem; margin-bottom: .45rem;
+}
+@media (max-width: 680px) {
+  .pub { margin: 0; padding: 1rem; }
+}
+.pub-links .bibtex { padding-top: 2.3rem; }

@@ -65,6 +65,7 @@
         <a href="#news" hidden>News</a>
         <a href="#publications">Publications</a>
         <a href="#research" hidden>Research</a>
+        <a href="#education">Education</a>
         <a href="#writing" hidden>Writing</a>
       </div>
       <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch theme">
@@ -84,12 +85,11 @@
           <p class="role"><strong>PhD Research Scholar</strong><br />
             Department of Computer Application<br />
             Graphic Era Deemed to be University, Dehradun, India</p>
+          <p class="status"><span class="dot" aria-hidden="true"></span>Open to research collaborations · <a href="mailto:aschauhan5d@gmail.com">get in touch</a></p>
 
           <div class="bio">
             <p>I am a machine learning researcher and PhD research scholar. I work on
               <strong>embodied vision AI</strong> and <strong>autonomous vehicles</strong>.</p>
-            <p>I am always happy to talk about research and possible collaborations — feel free to
-              <a href="mailto:aschauhan5d@gmail.com">email me</a>.</p>
           </div>
 
           <div class="links">
@@ -108,8 +108,12 @@
         </aside>
       </div>
 
-      <div class="interests"><strong>Research interests:</strong> embodied AI · computer vision ·
-        autonomous vehicles · machine learning</div>
+      <div class="interests">
+        <span class="interests-label">Research interests</span>
+        <ul class="chips">
+          <li>Embodied AI</li><li>Computer Vision</li><li>Autonomous Vehicles</li><li>Vision-Language Models</li><li>Machine Learning</li>
+        </ul>
+      </div>
     </section>
 
     <!-- ═══════════ NEWS ═══════════ -->
@@ -130,6 +134,7 @@
       <article class="pub no-thumb">
         
         <div>
+          <span class="pub-type">Conference · IEEE</span>
           <a class="pub-title" href="https://doi.org/10.1109/chandicon70877.2026.11767777" target="_blank" rel="noopener">DualGateNet: Explainable Pneumo 16 L Hybrid SE-ResNet50 and Vision Transformer Learnable Fusion</a>
           <div class="pub-authors"><span class="me">Abhishek Singh Chauhan</span>, Varsha Mittal</div>
           <div class="pub-venue"><em>2026 IEEE Chandigarh Subsection International Conference (CHANDICON)</em>, 2026</div>
@@ -159,11 +164,6 @@
         <div class="entry-title">PhD, Computer Application</div>
         <div class="entry-when">2026 – present</div>
         <div class="entry-sub">Graphic Era Deemed to be University, Dehradun, India</div>
-      </div>
-      <div class="entry">
-        <div class="entry-title">Master of Computer Applications (MCA)</div>
-        <div class="entry-when">2025</div>
-        <div class="entry-sub">UPES, Dehradun, India</div>
       </div>
       <!-- Add earlier degrees by copying the block above, e.g.
       <div class="entry">
@@ -202,6 +202,17 @@
       links.forEach((a, i) => a.classList.toggle('on', i === cur));
     }
     window.addEventListener('scroll', updateNav, { passive: true });
+    document.querySelectorAll('pre.bibtex').forEach(pre => {
+      const b = document.createElement('button');
+      b.type = 'button'; b.className = 'bib-copy'; b.textContent = 'Copy';
+      const text = pre.textContent;
+      b.onclick = () => {
+        const done = () => { b.textContent = 'Copied ✓'; setTimeout(() => b.textContent = 'Copy', 1500); };
+        if (navigator.clipboard) navigator.clipboard.writeText(text).then(done, () => {});
+        else { const r = document.createRange(); r.selectNodeContents(pre); getSelection().removeAllRanges(); getSelection().addRange(r); document.execCommand('copy'); done(); }
+      };
+      pre.prepend(b);
+    });
     updateNav();
   </script>
 </body>

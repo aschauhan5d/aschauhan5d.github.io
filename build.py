@@ -437,7 +437,7 @@ def pub_html(p):
 
 
 if pubs:
-    pubs_html = ('\n      <p class="pub-note"><span class="me" style="font-weight:600">Bold</span> marks my name.</p>'
+    pubs_html = (''
                  + "".join(pub_html(p) for p in pubs))
 else:
     pubs_html = """

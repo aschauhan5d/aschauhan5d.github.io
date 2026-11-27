@@ -17,8 +17,8 @@
   --highlight: #fff8e1;
   --highlight-line: #f0d98a;
   --code-bg: #f6f7f8;
-  --serif: 'Source Serif 4', 'Source Serif Pro', Georgia, 'Times New Roman', serif;
-  --sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --serif: 'Avenir Next', Avenir, 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;   /* same font as the Y Combinator site (Avenir); Nunito Sans where Avenir isn't installed */
+  --sans: 'Avenir Next', Avenir, 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
   --badge-fg: #9a4a00; --badge-bg: #fff1dc; --badge-line: #f3d3a6;
   --hl-keyword: #8b3fa8; --hl-string: #227a3c; --hl-number: #b4500f; --hl-title: #1d4f91; --hl-meta: #8a6d00;
@@ -70,8 +70,8 @@ html { overflow-x: clip; scroll-behavior: smooth; scroll-padding-top: 72px; -web
 
 body {
   font-family: var(--serif);
-  font-size: 18px;
-  line-height: 1.65;
+  font-size: 17px;
+  line-height: 1.6;
   color: var(--text);
   background: var(--bg);
   overflow-wrap: break-word;
@@ -140,7 +140,8 @@ a:hover { color: var(--accent-hover); text-decoration: underline; text-underline
 
 /* ── LAYOUT ── */
 .wrap { max-width: 860px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
-section { margin-top: 3.25rem; }
+section { margin-top: 3rem; padding-top: 2.25rem; border-top: 1px solid var(--line); }
+section#about { border-top: 0; padding-top: 0; margin-top: 0; }
 
 h2.sec {
   font: 600 13px var(--sans); letter-spacing: .12em; text-transform: uppercase;
@@ -148,15 +149,15 @@ h2.sec {
   display: flex; align-items: center; gap: .9rem;
   margin-bottom: 1.25rem;
 }
-h2.sec::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+h2.sec { color: var(--muted); }
 
 /* ── PROFILE ── */
 .profile {
   display: grid; grid-template-columns: 1fr 200px; gap: 2.5rem; align-items: start;
 }
 .profile h1 {
-  font-family: var(--serif); font-weight: 600; font-size: 40px;
-  letter-spacing: -.015em; line-height: 1.1; color: var(--heading);
+  font-family: var(--serif); font-weight: 700; font-size: 40px;
+  letter-spacing: -.02em; line-height: 1.1; color: var(--heading);
   margin-bottom: .5rem;
 }
 .role { font: 400 16px/1.55 var(--sans); color: var(--muted); margin-bottom: 1.25rem; }
@@ -204,8 +205,11 @@ h2.sec::after { content: ""; flex: 1; height: 1px; background: var(--line); }
   font: 500 13.5px var(--sans); color: var(--muted);
   margin: -.35rem 0 1.25rem;
 }
-.status a { font-weight: 500; }
-.status .dot { width: 8px; height: 8px; border-radius: 50%; background: #2e9d5b; box-shadow: 0 0 0 3px color-mix(in srgb, #2e9d5b 22%, transparent); }
+.status { align-items: baseline; }
+.status a { font-weight: 500; white-space: nowrap; }
+.status .dot { align-self: center; }
+.status:has(> span:nth-child(2)) .dot { align-self: flex-start; margin-top: .45em; }
+.status .dot { flex-shrink: 0; margin-left: 3px; width: 8px; height: 8px; border-radius: 50%; background: #2e9d5b; box-shadow: 0 0 0 3px color-mix(in srgb, #2e9d5b 22%, transparent); }
 
 /* ── NEWS ── */
 .news { list-style: none; }
@@ -228,7 +232,7 @@ h2.sec::after { content: ""; flex: 1; height: 1px; background: var(--line); }
   width: 160px; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 6px;
   border: 1px solid var(--line); background: var(--panel);
 }
-.pub-title { font-weight: 600; color: var(--heading); line-height: 1.4; display: block; }
+.pub-title { font-weight: 700; color: var(--heading); line-height: 1.4; display: block; }
 a.pub-title:hover { color: var(--accent); }
 .pub-authors { font-size: 16px; color: var(--text); margin-top: .15rem; }
 .pub-authors .me { font-weight: 600; }
@@ -291,7 +295,7 @@ a.pub-title:hover { color: var(--accent); }
 
 /* ── FOOTER ── */
 .footer {
-  margin-top: 4rem; padding-top: 1.25rem; border-top: 1px solid var(--line);
+  margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--line);
   font: 400 13.5px/1.6 var(--sans); color: var(--faint);
   display: flex; justify-content: space-between; flex-wrap: wrap; gap: .4rem 1.5rem;
 }
@@ -433,3 +437,55 @@ a.pub-title:hover { color: var(--accent); }
   .pub { margin: 0; padding: 1rem; }
 }
 .pub-links .bibtex { padding-top: 2.3rem; }
+
+/* ── MOBILE LAYOUT (one 16px gutter, everything on the same left edge) ── */
+@media (max-width: 680px) {
+  .nav-links { margin-left: 0; }
+  .wrap { padding: 1.75rem 1rem 3.5rem; }
+
+  .profile {
+    grid-template-columns: 76px 1fr; column-gap: 1rem; row-gap: 0;
+    align-items: center;
+  }
+  .profile > div { display: contents; }
+  .profile-side { grid-column: 1; grid-row: 1; order: 0; display: block; }
+  .profile-side .contact { display: none; }          /* email is in the buttons, city is in the role */
+  .photo { width: 76px; height: 76px; box-shadow: 0 0 0 3px var(--bg), 0 0 0 4px var(--line); }
+  .profile h1 { grid-column: 2; grid-row: 1; font-size: 26px; line-height: 1.15; margin: 0; }
+  .profile > div > :not(h1) { grid-column: 1 / -1; }
+  .role { margin: 1.1rem 0 .9rem; font-size: 15px; }
+  .status { margin: 0 0 1rem; font-size: 13.5px; }
+  .bio { font-size: 16.5px; }
+
+  .links { display: grid; grid-template-columns: repeat(6, 1fr); gap: .5rem; margin-top: 1.25rem; }
+  .links a { grid-column: span 2; }
+  .links a:first-child:nth-last-child(5) ~ a:nth-last-child(-n+2),
+  .links a:first-child:nth-last-child(2), .links a:first-child:nth-last-child(2) ~ a { grid-column: span 3; }   /* 5 buttons: 3 on top, 2 wider below */
+  .links a { justify-content: center; padding: .5rem .4rem; border-radius: 10px; }
+  .links .long { display: none; }
+
+  .interests { margin-top: 1.5rem; }
+  section { margin-top: 2.25rem; padding-top: 1.75rem; }
+  h2.sec { margin-bottom: 1rem; }
+  .pub { padding: 1rem; }
+  .footer { margin-top: 2.5rem; }
+}
+
+/* ── Variant B: centered profile card on phones ── */
+@media (max-width: 680px) {
+  .profile { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+  .profile-side { grid-column: 1; grid-row: 1; }
+  .photo { width: 112px; height: 112px; }
+  .profile h1 { grid-column: 1; grid-row: 2; font-size: 28px; margin-top: 1rem; }
+  .role { margin: .6rem 0 .9rem; }
+  .status { justify-content: center; }
+  .links { width: 100%; }
+  .interests { text-align: center; }
+  .chips { justify-content: center; }
+}
+@media (max-width: 680px) {
+  .status { display: block; text-align: center; }
+  .status .dot, .status:has(> span:nth-child(2)) .dot {
+    display: inline-block; vertical-align: .08em; margin: 0 .45rem 0 0;
+  }
+}

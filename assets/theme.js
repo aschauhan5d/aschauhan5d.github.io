@@ -10,7 +10,8 @@
   function current() { return root.getAttribute('data-theme') || (media.matches ? 'dark' : 'light'); }
 
   var s = saved();
-  if (s === 'light' || s === 'dark') root.setAttribute('data-theme', s);
+  // White (light) theme by default; dark only after the visitor picks it with the button.
+  root.setAttribute('data-theme', s === 'dark' ? 'dark' : 'light');
 
   function sync() {
     var dark = current() === 'dark';

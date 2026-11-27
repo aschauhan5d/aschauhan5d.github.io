@@ -175,7 +175,7 @@ posts.sort(key=lambda p: p["date"] or date.min, reverse=True)
 
 # ── post pages ───────────────────────────────────────────────────────────
 POST_TEMPLATE = """<!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -195,7 +195,7 @@ POST_TEMPLATE = """<!DOCTYPE html>
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600&family=JetBrains+Mono:wght@400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,300..800;1,6..12,400&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../../assets/style.css" />
   <script src="../../assets/theme.js"></script>
   <script type="application/ld+json">{jsonld}</script>

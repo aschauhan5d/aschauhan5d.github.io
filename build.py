@@ -128,6 +128,16 @@ def parse_entries(path):
     return entries
 
 
+def cache_bust(page):
+    """Adds ?v=<hash> to style.css / theme.js so phones load the new version right after an update."""
+    import hashlib
+    def ver(name):
+        f = ROOT / "assets" / name
+        return hashlib.md5(f.read_bytes()).hexdigest()[:8] if f.exists() else "1"
+    return re.sub(r'(assets/(style\.css|theme\.js))(\?v=\w+)?',
+                  lambda m: f"{m.group(1)}?v={ver(m.group(2))}", page)
+
+
 def replace_block(doc, name, content):
     pattern = re.compile(rf"(<!-- {name}:START -->)[\s\S]*?(<!-- {name}:END -->)")
     if not pattern.search(doc):
@@ -286,7 +296,7 @@ for i, p in enumerate(posts):
     )
     dest = OUT / p["slug"] / "index.html"
     dest.parent.mkdir(parents=True, exist_ok=True)
-    dest.write_text(page, encoding="utf-8")
+    dest.write_text(cache_bust(page), encoding="utf-8")
 
 
 # ── publications ─────────────────────────────────────────────────────────
@@ -424,9 +434,10 @@ def pub_html(p):
     tag_html = f'<span class="pub-type">{esc(tag)}</span>\n          ' if tag else ""
     thumb = (f'<img class="pub-thumb" src="{esc(p["image"])}" alt="" loading="lazy" />'
              if p.get("image") else "")
+    ptype = pub_type_of(p)
     classes = "pub" + ("" if thumb else " no-thumb") + (" highlight" if p.get("highlight", "").lower() == "true" else "")
     return f"""
-      <article class="{classes}">
+      <article class="{classes}" data-type="{ptype}">
         {thumb}
         <div>
           {tag_html}{title}{award}
@@ -438,14 +449,33 @@ def pub_html(p):
       </article>"""
 
 
+def pub_type_of(p):
+    return {"journal": "journal", "conference": "conference", "workshop": "conference",
+            "preprint": "preprint", "chapter": "chapter"}.get(p.get("type", "").lower(), "other")
+
+
+def pub_filters(pubs):
+    """All / Conference / Journal ... buttons above the list (only types that exist are shown)."""
+    labels = [("conference", "Conference"), ("journal", "Journal"), ("preprint", "Preprint"),
+              ("chapter", "Book chapter"), ("other", "Other")]
+    counts = {}
+    for p in pubs:
+        counts[pub_type_of(p)] = counts.get(pub_type_of(p), 0) + 1
+    btn = lambda key, label, n, on=False: (
+        f'<button type="button" class="pf{" on" if on else ""}" data-filter="{key}" '
+        f'aria-pressed="{"true" if on else "false"}">{label}<span class="pf-n">{n}</span></button>')
+    return ('\n      <div class="pub-filters" role="group" aria-label="Filter publications">'
+            + btn("all", "All", len(pubs), True)
+            + "".join(btn(k, l, counts[k]) for k, l in labels if counts.get(k))
+            + "</div>")
+
+
 if pubs:
-    pubs_html = (''
+    pubs_html = (pub_filters(pubs)
                  + "".join(pub_html(p) for p in pubs))
 else:
     pubs_html = """
-      <div class="empty-card">Manuscripts on parameter-efficient fine-tuning of Vision Transformers for
-        3D medical image segmentation are in preparation. Papers will appear here as they are published —
-        see also my <a href="https://orcid.org/0009-0005-3507-6499" target="_blank" rel="noopener">ORCID</a> record.</div>"""
+      <div class="empty-card">Papers will appear here as they are published — see also my <a href="https://orcid.org/0009-0005-3507-6499" target="_blank" rel="noopener">ORCID</a> record.</div>"""
 
 
 # ── news (news.md + blog posts) ──────────────────────────────────────────
@@ -519,7 +549,7 @@ doc = show_section(doc, "news", bool(news))
 doc = show_section(doc, "research", bool(research))
 doc = show_section(doc, "writing", bool(posts))
 doc = replace_block(doc, "UPDATED", f"Last updated {TODAY.strftime('%B %Y')}")
-INDEX.write_text(doc, encoding="utf-8")
+INDEX.write_text(cache_bust(doc), encoding="utf-8")
 
 
 # ── sitemap ──────────────────────────────────────────────────────────────

@@ -27,8 +27,8 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,300..800;1,6..12,400&family=JetBrains+Mono:wght@400&display=swap"
     rel="stylesheet" />
-  <link rel="stylesheet" href="assets/style.css" />
-  <script src="assets/theme.js"></script>
+  <link rel="stylesheet" href="assets/style.css?v=cc460544" />
+  <script src="assets/theme.js?v=455b5b2e"></script>
 
   <script type="application/ld+json">
   {
@@ -130,7 +130,8 @@
     <section id="publications" aria-labelledby="pub-h">
       <h2 class="sec" id="pub-h">Publications</h2>
       <!-- PUBLICATIONS:START -->
-      <article class="pub no-thumb">
+      <div class="pub-filters" role="group" aria-label="Filter publications"><button type="button" class="pf on" data-filter="all" aria-pressed="true">All<span class="pf-n">1</span></button><button type="button" class="pf" data-filter="conference" aria-pressed="false">Conference<span class="pf-n">1</span></button></div>
+      <article class="pub no-thumb" data-type="conference">
         
         <div>
           <span class="pub-type">Conference · IEEE</span>
@@ -173,6 +174,22 @@
       -->
     </section>
 
+    <!-- ═══════════ AFFILIATIONS ═══════════ -->
+    <!-- To use a real logo: put the image in assets/logos/ and replace the <span class="aff-mono">…</span>
+         with <img class="aff-logo" src="assets/logos/FILE.png" alt="" /> -->
+    <section id="affiliations" aria-labelledby="aff-h">
+      <h2 class="sec" id="aff-h">Affiliations</h2>
+      <ul class="affs">
+        <li class="aff">
+          <span class="aff-mono" aria-hidden="true">GEU</span>
+          <span class="aff-text">
+            <span class="aff-name">Graphic Era Deemed to be University</span>
+            <span class="aff-role">PhD Research Scholar · 2026 – present</span>
+          </span>
+        </li>
+      </ul>
+    </section>
+
     <!-- ═══════════ WRITING ═══════════ -->
     <section id="writing" hidden aria-labelledby="writing-h">
       <h2 class="sec" id="writing-h">Writing</h2>
@@ -213,6 +230,19 @@
       pre.prepend(b);
     });
     updateNav();
+
+    // Publication filter buttons (All / Conference / Journal ...)
+    document.querySelectorAll('.pub-filters .pf').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const f = btn.dataset.filter;
+        document.querySelectorAll('.pub-filters .pf').forEach(b => {
+          b.classList.toggle('on', b === btn); b.setAttribute('aria-pressed', b === btn);
+        });
+        document.querySelectorAll('#publications .pub').forEach(a => {
+          a.hidden = !(f === 'all' || a.dataset.type === f);
+        });
+      });
+    });
 
     // Visitor count shown in the footer (appears once GoatCounter is set up)
     fetch('https://aschauhan5d.goatcounter.com/counter/TOTAL.json')

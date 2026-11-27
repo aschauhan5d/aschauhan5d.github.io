@@ -554,19 +554,20 @@ a.pub-title:hover { color: var(--accent); }
 .pub[hidden] { display: none; }
 
 /* ── Paper thumbnail (figure) ── */
-.pub { grid-template-columns: 200px minmax(0, 1fr); gap: 1.4rem; align-items: start; }
+.pub { grid-template-columns: 180px minmax(0, 1fr); gap: 1.5rem; align-items: start; }
 .pub.no-thumb { grid-template-columns: minmax(0, 1fr); }
 .pub-thumb {
-  width: 200px; aspect-ratio: 4 / 3; object-fit: contain; background: #fff;
-  border: 1px solid var(--line); border-radius: 8px; padding: .35rem;
+  width: 180px; height: auto; aspect-ratio: auto; object-fit: contain; background: #fff;
+  border: 1px solid var(--line); border-radius: 8px; padding: 0;
 }
+.pub-tldr { font-size: 15.5px; line-height: 1.55; color: var(--muted); margin-top: .5rem; }
 @media (max-width: 680px) {
   .pub { grid-template-columns: minmax(0, 1fr); gap: .9rem; }
-  .pub-thumb { width: 100%; max-width: none; aspect-ratio: 16 / 9; }
+  .pub-thumb { width: 100%; max-width: 210px; }
 }
 
 /* ── Affiliations ── */
-.affs { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: .8rem; }
+.affs { list-style: none; display: grid; grid-template-columns: 1fr; gap: .8rem; }
 .aff {
   display: flex; align-items: center; gap: .9rem;
   border: 1px solid var(--line); border-radius: 12px; padding: .9rem 1rem;
@@ -584,3 +585,16 @@ a.pub-title:hover { color: var(--accent); }
 .aff-name { font: 600 15.5px/1.35 var(--sans); color: var(--heading); }
 .aff-role { font: 400 13.5px/1.5 var(--sans); color: var(--muted); margin-top: .15rem; }
 @media (max-width: 680px) { .affs { grid-template-columns: 1fr; } }
+
+.aff-when { margin-left: auto; padding-left: 1rem; font: 400 14px var(--sans); color: var(--faint); white-space: nowrap; align-self: flex-start; padding-top: .15rem; }
+.aff { padding: 1rem 1.2rem; gap: 1rem; }
+@media (max-width: 680px) {
+  .aff { display: grid; grid-template-columns: 52px minmax(0, 1fr); column-gap: .9rem; row-gap: .2rem; align-items: start; }
+  .aff-mono, .aff-logo { grid-row: 1 / span 2; }
+  .aff-text { grid-column: 2; }
+  .aff-when { grid-column: 2; margin: 0; padding: 0; font-size: 13px; }
+}
+/* a little less empty space between sections */
+@media (min-width: 681px) { section { margin-top: 2.75rem; padding-top: 2.25rem; } }
+
+.aff-logo { width: 56px; height: 56px; padding: 2px; border: 0; border-radius: 50%; background: #fff; object-fit: contain; }

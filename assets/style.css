@@ -489,3 +489,37 @@ a.pub-title:hover { color: var(--accent); }
     display: inline-block; vertical-align: .08em; margin: 0 .45rem 0 0;
   }
 }
+
+/* visitor count in the footer */
+.visits::before { content: "\00B7"; margin: 0 .5rem; }
+.visits[hidden] { display: none; }
+
+/* ════════ DESKTOP polish (text left, photo right) ════════ */
+@media (min-width: 681px) {
+  .nav-inner, .wrap { max-width: 940px; }
+  .wrap { padding-top: 3.75rem; }
+  .profile { grid-template-columns: minmax(0, 1fr) 210px; gap: 3rem; align-items: center; }
+  .links { flex-wrap: wrap; }
+  .profile-side { display: flex; justify-content: center; }
+  .profile-side .contact { display: none; }   /* email is in the buttons, city is in the role */
+  .photo { width: 210px; height: 210px; box-shadow: 0 0 0 5px var(--bg), 0 0 0 6px var(--line); }
+  .profile h1 { font-size: 44px; margin-bottom: .6rem; }
+  .role { font-size: 16px; margin-bottom: 1rem; }
+  .status { margin: 0 0 1.25rem; }
+  .bio { font-size: 19px; line-height: 1.6; max-width: 34em; }
+  .links { margin-top: 1.5rem; }
+  .interests { margin-top: 2.25rem; }
+  section { margin-top: 3.25rem; padding-top: 2.5rem; }
+}
+/* tablets: smaller photo so the buttons stay on one row */
+@media (min-width: 681px) and (max-width: 899px) {
+  .profile { grid-template-columns: minmax(0, 1fr) 160px; gap: 2rem; }
+  .photo { width: 160px; height: 160px; }
+  .profile h1 { font-size: 38px; }
+  .links a { padding: .32rem .7rem; }
+}
+@media (min-width: 681px) and (max-width: 799px) {
+  .links .long { display: none; }
+  .links { gap: .4rem; }
+  .links a { padding: .3rem .6rem; font-size: 13px; }
+}

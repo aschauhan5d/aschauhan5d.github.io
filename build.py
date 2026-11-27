@@ -254,6 +254,8 @@ POST_TEMPLATE = """<!DOCTYPE html>
       code.parentElement.appendChild(btn);
     }});
   </script>
+  <!-- Visitor counter (GoatCounter: free, no cookies). Stats: https://aschauhan5d.goatcounter.com -->
+  <script data-goatcounter="https://aschauhan5d.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>
 """

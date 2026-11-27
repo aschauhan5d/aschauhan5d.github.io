@@ -25,12 +25,3 @@
 #       ...
 #     }
 
-
-- title: "DualGateNet: Explainable Pneumo 16 L Hybrid SE-ResNet50 and Vision Transformer Learnable Fusion"
-  authors: "Abhishek Singh Chauhan, Varsha Mittal"
-  venue: "2026 IEEE Chandigarh Subsection International Conference (CHANDICON)"
-  year: 2026
-  type: "conference"
-  image: "assets/papers/dualgatenet.jpg"
-  tldr: "A dual-branch SE-ResNet50 + ViT-B/16 model with a learnable fusion gate and dual-stream explainability (Grad-CAM++ and Attention Rollout) for pneumonia detection from chest X-rays — AUC 0.967 on the Kermany dataset."
-  doi: "https://doi.org/10.1109/chandicon70877.2026.11767777"

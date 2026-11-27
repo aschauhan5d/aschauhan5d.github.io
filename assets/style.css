@@ -563,7 +563,8 @@ a.pub-title:hover { color: var(--accent); }
 .pub-tldr { font-size: 15.5px; line-height: 1.55; color: var(--muted); margin-top: .5rem; }
 @media (max-width: 680px) {
   .pub { grid-template-columns: minmax(0, 1fr); gap: .9rem; }
-  .pub-thumb { width: 100%; max-width: 210px; }
+  /* phone: figure sits in a full-width white panel, centered, not too tall */
+  .pub-thumb { width: 100%; max-width: none; height: 230px; object-fit: contain; padding: .5rem; }
 }
 
 /* ── Affiliations ── */

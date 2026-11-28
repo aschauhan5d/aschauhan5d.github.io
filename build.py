@@ -177,6 +177,9 @@ for path in sorted(BLOGS.glob("*.md")):
         "date_label": d.strftime("%B %-d, %Y") if d else meta.get("date", ""),
         "slug": slugify(meta.get("slug") or meta.get("title") or path.stem),
         "minutes": max(1, math.ceil(words / 220)),
+        "tags": [x.strip() for x in meta.get("tags", "").split(",") if x.strip()],
+        "featured": meta.get("featured", "").lower() in ("true", "yes"),
+        "cover": meta.get("cover", ""),
         "body": body.strip(),
     })
     print(f"  ✓ post: {meta.get('title', path.stem)}")
@@ -515,12 +518,24 @@ def show_section(doc, sid, visible):
 
 
 # ── writing list ─────────────────────────────────────────────────────────
-posts_html = "".join(f"""
-        <li>
-          <a class="post-link" href="blog/{p['slug']}/">{esc(p['title'])}</a>
-          <div class="post-meta"><time datetime="{p['date'].isoformat() if p['date'] else ''}">{esc(p['date_label'])}</time> · {p['minutes']} min read</div>
-          <p class="post-excerpt">{esc(p['excerpt'])}</p>
-        </li>""" for p in posts) or "\n        <li>No posts yet.</li>"
+def post_card(p):
+    cover = (f'<img class="post-cover" src="{esc(p["cover"])}" alt="" loading="lazy" />' if p["cover"] else "")
+    badge = '<span class="post-badge">Featured</span>' if p["featured"] else ""
+    tags = "".join(f'<span class="post-tag">{esc(x)}</span>' for x in p["tags"])
+    iso = p['date'].isoformat() if p['date'] else ''
+    return f"""
+        <li class="post-card{' has-cover' if cover else ''}">
+          <a class="post-card-link" href="blog/{p['slug']}/">
+            {cover}<span class="post-card-body">
+              {badge}<span class="post-title">{esc(p['title'])}</span>
+              <span class="post-excerpt">{esc(p['excerpt'])}</span>
+              <span class="post-meta"><time datetime="{iso}">{esc(p['date_label'])}</time> · {p['minutes']} min read</span>{('<span class="post-tags">' + tags + '</span>') if tags else ''}
+            </span>
+          </a>
+        </li>"""
+
+
+posts_html = "".join(post_card(p) for p in posts) or "\n        <li>No posts yet.</li>"
 
 
 # ── photo, CV, updated ───────────────────────────────────────────────────
@@ -544,6 +559,17 @@ doc = replace_block(doc, "CV", cv_html)
 doc = replace_block(doc, "NEWS", news_html + "\n        ")
 doc = replace_block(doc, "PUBLICATIONS", pubs_html + "\n      ")
 doc = replace_block(doc, "POSTS", posts_html + "\n        ")
+
+
+def sec_count(doc, hid, label, n, one, many):
+    """Adds a small count next to a section heading, e.g. 'PUBLICATIONS · 1 PAPER'."""
+    span = f'<span class="sec-count">{n} {one if n == 1 else many}</span>' if n else ""
+    return re.sub(rf'(<h2 class="sec" id="{hid}">{label})(<span class="sec-count">[^<]*</span>)?(</h2>)',
+                  lambda m: m.group(1) + span + m.group(3), doc)
+
+
+doc = sec_count(doc, "pub-h", "Publications", len(pubs), "paper", "papers")
+doc = sec_count(doc, "writing-h", "Writing", len(posts), "post", "posts")
 doc = replace_block(doc, "RESEARCH", research_html + ("\n      " if research_html else ""))
 doc = show_section(doc, "news", bool(news))
 doc = show_section(doc, "research", bool(research))

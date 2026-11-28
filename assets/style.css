@@ -599,3 +599,59 @@ a.pub-title:hover { color: var(--accent); }
 @media (min-width: 681px) { section { margin-top: 2.75rem; padding-top: 2.25rem; } }
 
 .aff-logo { width: 56px; height: 56px; padding: 2px; border: 0; border-radius: 50%; background: #fff; object-fit: contain; }
+
+/* ── ideas from rmehan.dev ── */
+/* count next to section headings: PUBLICATIONS · 1 PAPER */
+.sec-count { color: var(--faint); font-weight: 500; }
+h2.sec:has(.sec-count) { gap: 0; }
+.sec-count::before { content: "\00B7"; margin: 0 .55em; }
+.sec-tagline { font: 400 16px/1.55 var(--sans); color: var(--muted); margin: -.6rem 0 1.25rem; }
+
+/* email in the top menu (laptop) */
+.nav-mail {
+  font: 500 13.5px var(--sans); color: var(--muted); white-space: nowrap;
+  padding: .35rem .7rem; border-radius: 6px; margin-left: .25rem;
+}
+.nav-mail:hover { color: var(--accent); background: var(--accent-soft); }
+@media (max-width: 860px) { .nav-mail { display: none; } }
+
+/* writing: one card per post */
+.posts { display: grid; gap: .8rem; }
+.posts li.post-card { padding: 0; border: 0; }
+.post-card-link {
+  display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.2rem;
+  border: 1px solid var(--line); border-radius: 12px; padding: 1.1rem 1.25rem;
+  color: inherit; text-decoration: none;
+  transition: border-color .15s, transform .15s, box-shadow .15s;
+}
+.post-card.has-cover .post-card-link { grid-template-columns: 170px minmax(0, 1fr); }
+.post-card-link:hover {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+  transform: translateY(-2px); box-shadow: 0 6px 18px -10px color-mix(in srgb, var(--accent) 40%, transparent);
+}
+.post-cover { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-radius: 8px; background: var(--panel); }
+.post-card-body { display: flex; flex-direction: column; gap: .3rem; min-width: 0; }
+.post-badge {
+  align-self: flex-start; font: 700 11px var(--sans); letter-spacing: .05em; text-transform: uppercase;
+  color: #9a5b00; background: #fff1d6; border-radius: 4px; padding: .12rem .45rem; margin-bottom: .15rem;
+}
+:root[data-theme="dark"] .post-badge { color: #ffcf7a; background: #3a2c12; }
+.post-title { font: 700 18px/1.35 var(--sans); color: var(--heading); }
+.post-card-link:hover .post-title { color: var(--accent); }
+.post-card .post-excerpt { font-size: 15.5px; line-height: 1.55; color: var(--muted); margin: 0; }
+.post-card .post-meta { margin-top: .15rem; }
+.post-tags { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .35rem; }
+.post-tag {
+  font: 500 12px var(--sans); color: var(--accent); background: var(--accent-soft);
+  border-radius: 999px; padding: .1rem .55rem;
+}
+@media (max-width: 680px) {
+  .post-card.has-cover .post-card-link { grid-template-columns: minmax(0, 1fr); }
+  .post-card-link { padding: 1rem; }
+}
+@media (prefers-reduced-motion: reduce) { .post-card-link:hover { transform: none; } }
+/* phone menu with many links: soft fade on the right shows it can scroll */
+@media (max-width: 680px) {
+  .nav-links { overflow-x: auto; scrollbar-width: none; -webkit-mask-image: linear-gradient(to right, #000 82%, transparent); mask-image: linear-gradient(to right, #000 82%, transparent); padding-right: 1.25rem; }
+  .nav-links::-webkit-scrollbar { display: none; }
+}

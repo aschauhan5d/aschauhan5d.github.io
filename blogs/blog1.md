@@ -3,6 +3,7 @@ draft: "true"
 title: "Getting Started with Vision Transformers in PyTorch"
 date: "March 10, 2026"
 excerpt: "A practical introduction to ViT architecture and how to implement it from scratch using PyTorch, with examples on image classification tasks."
+tags: "Vision Transformers, PyTorch, Tutorial"
 ---
 
 ## Introduction
